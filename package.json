@@ -1,5 +1,5 @@
 {
-  "name": "changeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "name": "todo-list",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+changeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    "url": "git@github.com:Huskarnov/todo-list.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Huskarnov/changeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee/issues"
+    "url": "https://github.com/Huskarnov/todo-list/issues"
   },
-  "homepage": "https://github.com/Huskarnov/changeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee#readme",
+  "homepage": "https://github.com/Huskarnov/todo-list#readme",
   "description": "",
   "devDependencies": {
     "css-loader": "^7.1.2",
