@@ -85,22 +85,16 @@ header img{
   width: auto;
 }
 
-main{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-main > svg{
+header svg{
   height: 4rem;
   width: 4rem;
 
   color: var(--steel);
 
-  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
-main > svg:hover{
+header svg:hover{
   animation: emphacise 0.1s ease-in-out forwards ;
 }
 
@@ -110,20 +104,26 @@ main > svg:hover{
   100% {color: var(--sage);}
 }
 
-.card-grid{
+main{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;}
+
+.card-grid{
+  justify-self: center;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
   gap: 10px;
 
   padding-top: 1rem;
 
-  background-color: var(--prussian);
+  min-width: 400px;
+  max-width: 1220px;
 }
 
 .card{
-  width: 500px;
+  width: 400px;
   height: 300px;
 
   background-color: var(--steel);

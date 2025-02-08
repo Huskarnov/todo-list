@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "setup": "npm install -D webpack webpack-cli html-loader html-webpack-plugin css-loader style-loader webpack-dev-server webpack-merge",
     "build": "webpack --config webpack.prod.js",
-    "start": "webpack serve --open --config webpack.dev.js"
+    "start": "webpack serve --open --config webpack.dev.js",
+    "bista": "npm run build & npm run start"
   },
   "repository": {
     "type": "git",
