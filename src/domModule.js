@@ -1,7 +1,8 @@
 export {renderCards};
 
 const cardGrid = document.querySelector('.card-grid');
-
+const newProject = document.querySelector('header svg');
+const dialog = document.querySelector('dialog');
 
 const createCard = function(project){
     let card = document.createElement('div');
@@ -29,3 +30,7 @@ const renderCards = function(projects){
         cardGrid.appendChild(createCard(projects[i]));
     }
 }
+
+newProject.addEventListener('click', ()=>{
+    dialog.showModal();
+});

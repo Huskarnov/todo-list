@@ -179,3 +179,24 @@ main{
   overflow: hidden;
 
 }
+
+/* ////////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////////////////// */
+dialog{
+  align-self: center;
+  justify-self: center;
+  
+  border-radius: 15px;
+
+  background-color: var(--sage);
+  backdrop-filter: blur(11px);
+
+
+}
+.new-project{
+  width: 600px;
+  height: 600px;
+
+  
+  
+}
