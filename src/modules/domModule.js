@@ -44,4 +44,17 @@ function giveEvents(){
         dialog.showModal();
     });
     
+    //submit button
+    const submitButton = document.querySelector('#new-project-submit');
+    submitButton.addEventListener('click', (e)=>{
+        e.preventDefault();
+        dialog.close();
+    });
+
+    const cancelButton = document.querySelector('#new-project-cancel');
+    cancelButton.addEventListener('click', (e)=>{
+        e.preventDefault();
+        dialog.close();
+    });
+
 };

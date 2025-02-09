@@ -97,13 +97,21 @@ header svg{
 }
 
 header svg:hover{
-  animation: emphacise 0.1s ease-in-out forwards ;
+  animation: emphacise 0.2s ease forwards ;
 }
-
 
 @keyframes emphacise {
   0% {color: var(--steel);}
   100% {color: var(--sage);}
+}
+
+header svg:not(:hover) {
+  animation: deEmphrasis 0.2s ease forwards ;
+}
+
+@keyframes deEmphrasis {
+  0% {color: var(--sage);}
+  100% {color: var(--steel);}
 }
 
 main{
@@ -150,14 +158,12 @@ main{
   white-space: nowrap;
   overflow: hidden;
 
-  background-color: cadetblue;
 
   width: 350px;
   text-align: center;
 }
 .card h3:hover{
   overflow:visible;
-  background-color: steelblue;
 }
 
 .card p:nth-child(2){
@@ -224,6 +230,8 @@ dialog{
   width: 17rem;
   font-size: 2rem;
   text-indent: 0.5rem;
+  border-radius: 15px;
+  padding: 5px 0;
 }
 
 .new-project div:nth-child(5){
