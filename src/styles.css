@@ -183,20 +183,58 @@ main{
 /* ////////////////////////////////////////////////////////////////////////////// */
 /* ////////////////////////////////////////////////////////////////////////////// */
 dialog{
-  align-self: center;
-  justify-self: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the dialog */
   
-  border-radius: 15px;
+  border-radius: 10% 10% 30% 30% / 10% 10% 50% 50% ;
 
   background-color: var(--sage);
-  backdrop-filter: blur(11px);
+  backdrop-filter: blur(1px);
 
 
 }
 .new-project{
-  width: 600px;
-  height: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  /* width: 600px; */
+  /* height: 500px; */
+}
+.new-project div{
+  display: flex;
+  gap: 2rem;
+}
+.new-project h2{
+  font-size: 3rem;
+  font-weight:900;
+  align-self: center;
+  margin-bottom: 2rem;
+}
 
-  
-  
+.new-project div label{
+  font-size: 2rem;
+  border-radius: 15px;
+  width: 11rem;
+}
+
+.new-project input, .new-project textarea{
+  width: 17rem;
+  font-size: 2rem;
+  text-indent: 0.5rem;
+}
+
+.new-project div:nth-child(5){
+  align-self: center;
+  margin-bottom: 6rem;
+}
+
+.new-project button{
+  margin-top: 2rem;
+  font-size: 2rem;
+
+  border-radius: 15px;
+  padding: 0.5rem 2rem;
 }
