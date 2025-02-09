@@ -1,6 +1,6 @@
 import './styles.css';
 
-import { projects } from './data';
-import { renderCards } from './domModule';
+import { renderCards, giveEvents } from './modules/domModule';
 
-renderCards(projects);
+renderCards();
+giveEvents();

@@ -1,8 +1,11 @@
-export {renderCards};
+import { projects } from './dataModule';
+
+export {renderCards, giveEvents};
+
 
 const cardGrid = document.querySelector('.card-grid');
-const newProject = document.querySelector('header svg');
-const dialog = document.querySelector('dialog');
+
+
 
 const createCard = function(project){
     let card = document.createElement('div');
@@ -24,13 +27,21 @@ const createCard = function(project){
 };
 
 
-
-const renderCards = function(projects){
-    for(let i = 0; i <= projects.length; i++){
+//uses create card for every project data to generate a card
+const renderCards = function(){
+    for(let i = 0; i <= projects.length - 1; i++){
         cardGrid.appendChild(createCard(projects[i]));
     }
 }
 
-newProject.addEventListener('click', ()=>{
-    dialog.showModal();
-});
+//gives event listeners to elements
+function giveEvents(){
+    //new project event
+    const newProject = document.querySelector('header svg');
+    const dialog = document.querySelector('dialog');
+
+        newProject.addEventListener('click', ()=>{
+        dialog.showModal();
+    });
+    
+};
