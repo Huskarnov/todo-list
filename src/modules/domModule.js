@@ -1,12 +1,9 @@
-import { projects, deleteProject} from './dataModule';
+import { projects,updateStorage, deleteProject} from './dataModule';
 
 export {renderCards};
 
 
 const cardGrid = document.querySelector('.card-grid');
-
-//CONTENT:
-//createCard, renderCards, clearCards
 
 //--------------------------------------------------------------------------------
 
@@ -31,6 +28,16 @@ const createCard = function(project){
     editProject.style.display = 'none';
 
 
+    
+    crossDelete.addEventListener('click', (event)=>{
+        const gridChildren = Array.from(crossDelete.parentElement.parentElement.children);
+        const index = gridChildren.indexOf(crossDelete.parentElement);
+
+        deleteProject(index);
+        updateStorage();
+        renderCards();
+    });
+
     card.addEventListener('mouseenter', ()=>{
         crossDelete.style.display = 'block';
         editProject.style.display = 'block';
@@ -38,15 +45,6 @@ const createCard = function(project){
     card.addEventListener('mouseleave', ()=>{
         crossDelete.style.display = 'none';
         editProject.style.display = 'none';
-    });
-    
-    crossDelete.addEventListener('click', (event)=>{
-        const gridChildren = Array.from(crossDelete.parentElement.parentElement.children);
-        const index = gridChildren.indexOf(crossDelete.parentElement);
-
-        deleteProject(index);
-        console.log(projects);
-        renderCards();
     });
 
     card.appendChild(title);
@@ -79,14 +77,14 @@ const clearCards = function(){
 //New project form events
 
 const newProjectButton = document.querySelector('header svg');
-const dialog = document.querySelector('dialog');
+const dialog = document.querySelector('#dialog-form');
 const projectForm = document.querySelector('.new-project');
 const cancelProjectButton = document.querySelector('#new-project-cancel');
 
     //open new project form
     newProjectButton.addEventListener('click', ()=>{
         dialog.showModal();
-        projectForm.style.display = 'block';
+        // dialog.classList.add("dialog-blur");
     });
 
 
@@ -104,7 +102,8 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
         };
 
         projects.push(projectObj);
-        
+        updateStorage();
+
         dialog.close();
         projectForm.style.display = 'none';
         projectForm.reset();
