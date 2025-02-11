@@ -1,6 +1,5 @@
 import './styles.css';
 
-import { renderCards, giveEvents } from './modules/domModule';
+import { renderCards } from './modules/domModule';
 
 renderCards();
-giveEvents();

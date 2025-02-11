@@ -1,12 +1,16 @@
-import { projects} from './dataModule';
+import { projects, deleteProject} from './dataModule';
 
-export {renderCards, giveEvents};
+export {renderCards};
 
 
 const cardGrid = document.querySelector('.card-grid');
 
+//CONTENT:
+//createCard, renderCards, clearCards
 
 //--------------------------------------------------------------------------------
+
+//Card management
 
 const createCard = function(project){
     let card = document.createElement('div');
@@ -35,7 +39,15 @@ const createCard = function(project){
         crossDelete.style.display = 'none';
         editProject.style.display = 'none';
     });
+    
+    crossDelete.addEventListener('click', (event)=>{
+        const gridChildren = Array.from(crossDelete.parentElement.parentElement.children);
+        const index = gridChildren.indexOf(crossDelete.parentElement);
 
+        deleteProject(index);
+        console.log(projects);
+        renderCards();
+    });
 
     card.appendChild(title);
     card.appendChild(description);
@@ -46,38 +58,39 @@ const createCard = function(project){
     return card;
 };
 
-//--------------------------------------------------------------------------------
 
-//uses create card for every project data to generate a card
+//uses createCard for every project data to generate a card then append it to grid
 const renderCards = function(){
     clearCards();
 
-    for(let i = 0; i <= projects.length - 1; i++){
+    for(let i = 0; i < projects.length; i++){
         cardGrid.appendChild(createCard(projects[i]));
     }
+    // console.log(cardGrid.children);
 }
-//--------------------------------------------------------------------------------
 
+//remove card elements from the grid to then re-render them
 const clearCards = function(){
-    for(let i = 0;i <= cardGrid.children.length - 1; i++){
+    for(let i = cardGrid.children.length - 1 ;i >=0 ; i--){
         cardGrid.removeChild(cardGrid.children[i]);
     };
 };
 //--------------------------------------------------------------------------------
+//New project form events
 
-//open new project form
-function giveEvents(){
-    const newProject = document.querySelector('header svg');
-    const dialog = document.querySelector('dialog');
+const newProjectButton = document.querySelector('header svg');
+const dialog = document.querySelector('dialog');
+const projectForm = document.querySelector('.new-project');
+const cancelProjectButton = document.querySelector('#new-project-cancel');
 
-        newProject.addEventListener('click', ()=>{
+    //open new project form
+    newProjectButton.addEventListener('click', ()=>{
         dialog.showModal();
+        projectForm.style.display = 'block';
     });
 
-//--------------------------------------------------------------------------------
 
-    //submit event
-    const projectForm = document.querySelector('.new-project');
+    //submit new project from event
 
     projectForm.addEventListener('submit', (e)=>{
         e.preventDefault();
@@ -93,20 +106,18 @@ function giveEvents(){
         projects.push(projectObj);
         
         dialog.close();
+        projectForm.style.display = 'none';
         projectForm.reset();
 
-        clearCards();
         renderCards();
 
-
     });
-//--------------------------------------------------------------------------------
-    const cancelButton = document.querySelector('#new-project-cancel');
-    cancelButton.addEventListener('click', (e)=>{
+
+    //close new project form
+    cancelProjectButton.addEventListener('click', (e)=>{
         e.preventDefault();
         dialog.close();
         projectForm.reset();
     });
 
-};
 //--------------------------------------------------------------------------------
