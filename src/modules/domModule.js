@@ -17,15 +17,15 @@ const createCard = function(project){
     let description = document.createElement('p');
     let dueDate = document.createElement('p');
     let crossDelete = document.createElement('div');
-    let editProject = document.createElement('div');
+    // let editProject = document.createElement('div');
 
     title.textContent = project.title;
     description.textContent = project.description;
     dueDate.textContent = project.dueDate;
     crossDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
     crossDelete.style.display ='none';
-    editProject.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 19V5H5v14zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-2.3 6.35l-1 1l-2.05-2.05l1-1c.21-.22.56-.22.77 0l1.28 1.28c.22.21.22.56 0 .77M7 14.94l6.06-6.06l2.06 2.06L9.06 17H7z"/></svg>';
-    editProject.style.display = 'none';
+    // editProject.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 19V5H5v14zm0-16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-2.3 6.35l-1 1l-2.05-2.05l1-1c.21-.22.56-.22.77 0l1.28 1.28c.22.21.22.56 0 .77M7 14.94l6.06-6.06l2.06 2.06L9.06 17H7z"/></svg>';
+    // editProject.style.display = 'none';
 
 
     
@@ -40,18 +40,22 @@ const createCard = function(project){
 
     card.addEventListener('mouseenter', ()=>{
         crossDelete.style.display = 'block';
-        editProject.style.display = 'block';
+        // editProject.style.display = 'block';
     });
     card.addEventListener('mouseleave', ()=>{
         crossDelete.style.display = 'none';
-        editProject.style.display = 'none';
+        // editProject.style.display = 'none';
     });
 
     card.appendChild(title);
     card.appendChild(description);
     card.appendChild(dueDate);
     card.appendChild(crossDelete);
-    card.appendChild(editProject);
+    // card.appendChild(editProject);
+
+    card.addEventListener('click', (event)=>{
+        projectDetails(event);
+    });
 
     return card;
 };
@@ -119,3 +123,15 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
     });
 
 //--------------------------------------------------------------------------------
+
+const projectDetails = function(event){
+    const projectDialog = document.querySelector('#projectDialog');
+    const projectTitle = document.querySelector('.projectContent h1');
+
+    const parentChildren = Array.from(event.target.parentElement.children);
+    const cardIndex = parentChildren.indexOf(event.target);
+
+    projectTitle.textContent = projects[cardIndex].title;
+
+    projectDialog.showModal();
+};
