@@ -84,7 +84,6 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
     //open new project form
     newProjectButton.addEventListener('click', ()=>{
         dialog.showModal();
-        // dialog.classList.add("dialog-blur");
     });
 
 
