@@ -30,6 +30,7 @@ const createCard = function(project){
 
     
     crossDelete.addEventListener('click', (event)=>{
+        event.stopPropagation();
         const gridChildren = Array.from(crossDelete.parentElement.parentElement.children);
         const index = gridChildren.indexOf(crossDelete.parentElement);
 
@@ -54,6 +55,7 @@ const createCard = function(project){
     // card.appendChild(editProject);
 
     card.addEventListener('click', (event)=>{
+        
         showProjectDetails(event.currentTarget);
     });
 
@@ -68,7 +70,6 @@ const renderCards = function(){
     for(let i = 0; i < projects.length; i++){
         cardGrid.appendChild(createCard(projects[i]));
     }
-    // console.log(cardGrid.children);
 }
 
 //remove card elements from the grid to then re-render them
@@ -108,12 +109,12 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
         updateStorage();
 
         dialog.close();
-        projectForm.style.display = 'none';
         projectForm.reset();
 
         renderCards();
 
     });
+
 
     //close new project form
     cancelProjectButton.addEventListener('click', (e)=>{

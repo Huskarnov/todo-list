@@ -37,7 +37,6 @@ function initializeLocalStorage(){
     }else{
 
     projects = JSON.parse(localStorage.getItem("projects"));
-    console.log(projects);
     };
 };
 
