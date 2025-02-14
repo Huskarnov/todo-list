@@ -126,19 +126,15 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
 
 const showProjectDetails = function(event){
     const projectDialog = document.querySelector('#projectDialog');
-    const taskList = document.querySelector('.taskList');
     const projectTitle = document.querySelector('.projectContent h1');
+    const taskList = document.querySelector('.taskList');
 
     const parentChildren = Array.from(event.parentElement.children);
     const cardIndex = parentChildren.indexOf(event);
 
     projectTitle.textContent = projects[cardIndex].title;
 
-    if(taskList.children.length > 0){
-        for (let i = taskList.children.length; i > 0; i--){
-            taskList.removeChild(taskList.lastChild);
-        };
-    };
+    clearElementChildren(taskList);
 
     projects[cardIndex].checkList.forEach(element => {
         const taskWrapper = document.createElement('div');
@@ -146,10 +142,11 @@ const showProjectDetails = function(event){
         const taskDescription = document.createElement('p');
 
         taskStatus.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2m-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8z"/></svg>';
+        
         if(element[0] === true){
             taskStatus.style.color = "green";
-        } taskStatus.style.color = "grey";
-
+        }  else{ taskStatus.style.color = "grey";};
+        
         taskDescription.textContent = element[1];
 
         taskWrapper.appendChild(taskStatus);
@@ -161,4 +158,12 @@ const showProjectDetails = function(event){
     // console.log(projects[cardIndex].checkList[0][0]);
 
     projectDialog.showModal();
+};
+
+const clearElementChildren = function(element){
+    if(element.children.length > 0){
+        for (let i = element.children.length; i > 0; i--){
+            element.removeChild(element.lastChild);
+        };
+    };
 };

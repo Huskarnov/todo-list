@@ -7,19 +7,20 @@ let projects = [];
 function initializeLocalStorage(){
 
     if(localStorage.getItem("visited") === null){
+        
         localStorage.setItem("visited", "true");
 
         const initialData = JSON.stringify([{   title: "Omelette chopping",
             description: "buy all ingredients to make an omelette",
             dueDate: "2025/03/25",
             checkList: [[false, "buy eggs"],
-                        [false, "buy oil"],
+                        [true, "buy oil"],
                         [false, "buy salt"]]
         },
         {   title: "Vegas trip",
             description: "Do things that will stay there",
             dueDate: "2025/03/25",
-            checkList: [[false, "do poweder"],
+            checkList: [[true, "do poweder"],
                         [false, "cross dress"],
                         [false, "gamble away all savings"]]
         },
@@ -28,7 +29,7 @@ function initializeLocalStorage(){
             dueDate: "2025/03/25",
             checkList: [[false, "modify genes"],
                         [false, "wear hazmat"],
-                        [false, "inject bats with result"]]
+                        [true, "inject bats with result"]]
         }
         ]);
         localStorage.setItem("projects", initialData);
@@ -36,7 +37,7 @@ function initializeLocalStorage(){
     }else{
 
     projects = JSON.parse(localStorage.getItem("projects"));
-
+    console.log(projects);
     };
 };
 
