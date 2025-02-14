@@ -285,8 +285,6 @@ main{
 
   margin-top: 2rem;
   margin-bottom: 6rem;
-
-
 }
 
 .new-project button{
@@ -361,7 +359,7 @@ main{
   background-color: var(--sage);
 
   width: 600px;
-  height: 600px;
+  min-height: 400px;
 
   animation: popIn 0.1s ease-in;
 
@@ -390,4 +388,20 @@ main{
   width: 70px;
   height: 70px;
   color: var(--prussian);
+}
+
+.taskList{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+  width: 100%;
+}
+.taskList > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  font-size: 1.5rem;
 }

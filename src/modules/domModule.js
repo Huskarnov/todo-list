@@ -4,7 +4,7 @@ export {renderCards};
 
 
 const cardGrid = document.querySelector('.card-grid');
-
+let currentIndex;
 //--------------------------------------------------------------------------------
 
 //Card management
@@ -57,6 +57,7 @@ const createCard = function(project){
     card.addEventListener('click', (event)=>{
         
         showProjectDetails(event.currentTarget);
+
     });
 
     return card;
@@ -126,12 +127,14 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
 //--------------------------------------------------------------------------------
 
 const showProjectDetails = function(event){
+
     const projectDialog = document.querySelector('#projectDialog');
     const projectTitle = document.querySelector('.projectContent h1');
     const taskList = document.querySelector('.taskList');
 
     const parentChildren = Array.from(event.parentElement.children);
     const cardIndex = parentChildren.indexOf(event);
+    currentIndex = cardIndex;
 
     projectTitle.textContent = projects[cardIndex].title;
 
@@ -160,6 +163,9 @@ const showProjectDetails = function(event){
 
     projectDialog.showModal();
 };
+
+const addTaskButton = document.querySelector('.projectContent > svg:last-child');
+
 
 const clearElementChildren = function(element){
     if(element.children.length > 0){

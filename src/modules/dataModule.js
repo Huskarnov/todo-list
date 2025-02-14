@@ -20,7 +20,7 @@ function initializeLocalStorage(){
         {   title: "Vegas trip",
             description: "Do things that will stay there",
             dueDate: "2025/03/25",
-            checkList: [[true, "do poweder"],
+            checkList: [[true, "do powder"],
                         [false, "cross dress"],
                         [false, "gamble away all savings"]]
         },
