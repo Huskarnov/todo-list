@@ -361,7 +361,7 @@ main{
 
   background-color: var(--sage);
 
-  max-width: 800px;
+  width: 600px;
   height: 600px;
 
   animation: popIn 0.1s ease-in;
@@ -369,7 +369,7 @@ main{
 }
 
 .projectContent h1{
-  font-size: 4rem;
+  font-size: 2.5rem;
 }
 
 .projectContent svg:nth-child(2){
@@ -382,7 +382,7 @@ main{
   color: var(--prussian);
 }
 
-.projectContent svg:last-child{
+.projectContent > svg:last-child{
   position: absolute;
   left: 50%;
   transform: translate(-50%);
