@@ -1,8 +1,8 @@
-export {projects, initializeLocalStorage,updateStorage, deleteProject};
+export {projects, dataManagement};
 
 let projects = [];
 
-
+const dataManagement = function(){
 
 function initializeLocalStorage(){
 
@@ -11,7 +11,7 @@ function initializeLocalStorage(){
         localStorage.setItem("visited", "true");
 
         const initialData = JSON.stringify([{   title: "Omelette chopping",
-            description: "buy all ingredients to make an omelette",
+            description: "Buy all ingredients to make an omelette",
             dueDate: "2025/03/25",
             checkList: [[false, "buy eggs"],
                         [true, "buy oil"],
@@ -25,7 +25,7 @@ function initializeLocalStorage(){
                         [false, "gamble away all savings"]]
         },
         {   title: "Virus upgrade",
-            description: "operate gain of function research",
+            description: "Operate gain of function research",
             dueDate: "2025/03/25",
             checkList: [[false, "modify genes"],
                         [false, "wear hazmat"],
@@ -49,7 +49,14 @@ function updateStorage(){
     console.log(localStorage.getItem("projects"));
 };
 
+const addProject = function(project){
+    projects.push(project);
+};
 
 const deleteProject = function(index){
                 projects.splice(index, 1);
-            }
+            };
+
+            return {initializeLocalStorage,updateStorage,addProject, deleteProject};
+            
+        };

@@ -1,7 +1,8 @@
 import './styles.css';
 
-import { renderCards } from './modules/domModule';
-import { initializeLocalStorage } from './modules/dataModule';
+import { cardManagement } from './modules/domModule';
+import { dataManagement } from './modules/dataModule';
 
-initializeLocalStorage();
-renderCards();
+dataManagement().initializeLocalStorage();
+
+cardManagement().renderCards();

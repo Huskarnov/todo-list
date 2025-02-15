@@ -1,7 +1,6 @@
-import { projects,updateStorage, deleteProject} from './dataModule';
+import { projects, dataManagement} from './dataModule';
 
-export {renderCards};
-
+export {cardManagement};
 
 const cardGrid = document.querySelector('.card-grid');
 const taskList = document.querySelector('.taskList');
@@ -9,6 +8,7 @@ let currentIndex;
 //--------------------------------------------------------------------------------
 //Card management
 
+function cardManagement(){
 const createCard = function(project){
     let card = document.createElement('div');
     card.classList.add('card');
@@ -28,9 +28,9 @@ const createCard = function(project){
         event.stopPropagation();
         const gridChildren = Array.from(crossDelete.parentElement.parentElement.children);
         const index = gridChildren.indexOf(crossDelete.parentElement);
-        deleteProject(index);
-        updateStorage();
-        renderCards();
+        dataManagement().deleteProject(index);
+        dataManagement().updateStorage();
+        cardManagement().renderCards();
     });
 
     card.appendChild(title);
@@ -52,7 +52,6 @@ const createCard = function(project){
 };
 
 
-//uses createCard for every project data to generate a card then append it to grid
 const renderCards = function(){
 
     clearElementChildren(cardGrid);
@@ -62,6 +61,8 @@ const renderCards = function(){
     }
 }
 
+return {createCard, renderCards}
+};
 //--------------------------------------------------------------------------------
 //New project 
 
@@ -91,13 +92,13 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
             checkList: [],
         };
 
-        projects.push(projectObj);
-        updateStorage();
+        dataManagement().addProject(projectObj);
+        dataManagement().updateStorage();
 
         newProjectDialog.close();
         projectForm.reset();
 
-        renderCards();
+        cardManagement().renderCards();
 
     });
 
@@ -124,8 +125,6 @@ function capitalizeFirst(string){
 
 const showProjectDetails = function(event){
 
-    
-
     const parentChildren = Array.from(event.parentElement.children);
     const cardIndex = parentChildren.indexOf(event);
     currentIndex = cardIndex;
@@ -150,6 +149,9 @@ const clearElementChildren = function(element){
 };
 
 function renderTasks(taskList){
+
+    clearElementChildren(taskList);
+
     projects[currentIndex].checkList.forEach(element => {
         const taskWrapper = document.createElement('div');
         const taskStatus = document.createElement('div');
@@ -159,12 +161,14 @@ function renderTasks(taskList){
         
         if(element[0] === true){
             taskStatus.style.color = "green";
+            taskWrapper.style.opacity = '0.3';
         }  else{ taskStatus.style.color = "grey";};
         
         taskDescription.textContent = capitalizeFirst(element[1]);
 
         taskWrapper.appendChild(taskStatus);
         taskWrapper.appendChild(taskDescription);
+
 
         taskList.appendChild(taskWrapper);
     });
@@ -173,6 +177,66 @@ function renderTasks(taskList){
 
 const addTaskButton = document.querySelector('.projectContent > svg:last-child');
 addTaskButton.addEventListener('click', ()=>{
+
+    if((taskList.lastChild.nodeName === 'DIV')){
+
+    const newTaskForm = document.createElement('form');
+    const newTaskInputsWrapper = document.createElement('div');
+    const newTaskInput = document.createElement('input');
+    const newTaskInputDate = document.createElement('input');
+    const newTaskButtonsWrapper = document.createElement('div');
+    const newTaskSubmitButton = document.createElement('button');
+    const newTaskCancelButton = document.createElement('button');
+
+    newTaskInput.type = 'text';
+    newTaskInput.name = 'todo';
+    newTaskInput.required = 'true';
+    newTaskInput.placeholder = 'To Do';
+
+    newTaskInputDate.type = 'date';
+    newTaskInputDate.name = 'taskDate';
+    newTaskInputDate.required = 'true';
+
+    newTaskInputsWrapper.append(newTaskInput, newTaskInputDate);
+
+
+    newTaskSubmitButton.type = 'submit';
+    newTaskSubmitButton.innerHTML ='<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m10 17l-5-5l1.41-1.42L10 14.17l7.59-7.59L19 8m-7-6A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>';
+
+    newTaskCancelButton.type = 'button';
+    newTaskCancelButton.innerHTML ='<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m3.59 5L12 10.59L8.41 7L7 8.41L10.59 12L7 15.59L8.41 17L12 13.41L15.59 17L17 15.59L13.41 12L17 8.41z"/></svg>';
+    newTaskButtonsWrapper.append(newTaskSubmitButton, newTaskCancelButton);
+
+    newTaskSubmitButton.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+        const taskData = new FormData(newTaskForm);
+        projects[currentIndex].checkList.push([false, taskData.get('todo')]);
+
+        
+        console.log(projects[currentIndex].checkList);
+
+        // taskList.removeChild(taskList.lastChild);
+
+        // renderTasks(taskList);
+
+    });    
+
+    newTaskCancelButton.addEventListener('click', ()=>{
+        taskList.removeChild(taskList.lastChild);
+    });
+
+    newTaskForm.append(newTaskInputsWrapper, newTaskButtonsWrapper);
+    
+
+    
+
+    taskList.appendChild(newTaskForm);
+
+    
+
+    };
+
 
 });
 

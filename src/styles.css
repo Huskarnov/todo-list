@@ -370,6 +370,9 @@ main{
   min-width: 400px;
   min-height: 400px;
 
+  max-width: 500px;
+  min-width: 400px;
+
   animation: popIn 0.1s ease-in;
 
 }
@@ -398,7 +401,7 @@ main{
   height: 70px;
   color: var(--prussian);
 }
-.projectContent svg:nth-child(2):hover, .projectContent svg:last-child:hover{
+.projectContent > svg:nth-child(2):hover, .projectContent > svg:last-child:hover{
   color: var(--pearl);
 }
 
@@ -406,14 +409,83 @@ main{
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 5px;
+  gap: 10px;
   width: 100%;
+  cursor: pointer;
+
 }
 .taskList > div{
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
-
   font-size: 1.5rem;
+}
+
+.taskList >div:not(form):hover{
+  filter: brightness(2);
+  text-shadow: 2px 2px 5px white;
+}
+
+.projectContent form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+
+  margin-top: 1rem;
+
+  animation: popIn 0.1s ease-in;
+}
+@keyframes popIn {
+  0% {opacity: 0;}
+  100%{ opacity: 1;}
+  
+}
+.projectContent form > div:nth-child(1){
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.projectContent input{
+  width: 90%;
+  align-self: center;
+  font-size: 2rem;
+  text-indent: 0.5rem;
+
+  border-radius: 15px;
+  padding: 5px 0;
+
+  background-color: var(--pearl);
+}
+.projectContent input:first-child::placeholder{
+  text-align: center;
+}
+.projectContent input:nth-child(2){
+  text-align: center;
+}
+
+.projectContent form > div:nth-child(2){
+  display: flex;
+  gap: 15px;
+
+  margin-bottom: 3rem;
+}
+
+.projectContent form button {
+  border-radius: 50%;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.projectContent form button > svg{
+  height: 50px;
+  width: 50px;
+}
+
+.projectContent form button:nth-child(1) > svg{
+  color: var(--steel);
+}
+.projectContent form button:nth-child(2) > svg{
+  color: var(--pearl);
 }
