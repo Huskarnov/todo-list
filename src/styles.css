@@ -363,7 +363,8 @@ main{
   padding: 3rem;
 
   border: 5px double var(--prussian);
-  border-radius: 10% 10% 30% 30% / 10% 10% 50% 50% ;
+  border-radius: 15px;
+  /* border-radius: 10% 10% 30% 30% / 10% 10% 50% 50% ; */
 
   background-color: var(--sage);
 
@@ -412,6 +413,10 @@ main{
   gap: 10px;
   width: 100%;
   cursor: pointer;
+
+
+  margin-bottom: 3.5rem;
+
 
 }
 .taskList > div{

@@ -26,8 +26,9 @@ const createCard = function(project){
     crossDelete.style.display ='none';
     crossDelete.addEventListener('click', (event)=>{
         event.stopPropagation();
-        const gridChildren = Array.from(crossDelete.parentElement.parentElement.children);
-        const index = gridChildren.indexOf(crossDelete.parentElement);
+
+        const index = generalMethods().getIndexInParent(crossDelete.parentElement);
+
         dataManagement().deleteProject(index);
         dataManagement().updateStorage();
         cardManagement().renderCards();
@@ -86,8 +87,8 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
 
         const data = new FormData(projectForm);
         const projectObj = {
-            title: capitalizeFirst(data.get('title')),
-            description: capitalizeFirst(data.get('description')),
+            title: generalMethods().capitalizeFirst(data.get('title')),
+            description: generalMethods().capitalizeFirst(data.get('description')),
             dueDate: (data.get('dueDate')).replaceAll('-','/'),
             checkList: [],
         };
@@ -102,9 +103,7 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
 
     });
 
-function capitalizeFirst(string){
-    return String(string).charAt(0).toUpperCase() + (string).slice(1);
-};
+
 
     //close new project form
     cancelProjectButton.addEventListener('click', (e)=>{
@@ -125,16 +124,13 @@ function capitalizeFirst(string){
 
 const showProjectDetails = function(event){
 
-    const parentChildren = Array.from(event.parentElement.children);
-    const cardIndex = parentChildren.indexOf(event);
-    currentIndex = cardIndex;
+    currentIndex = generalMethods().getIndexInParent(event);
 
     projectTitle.textContent = projects[currentIndex].title;
 
     clearElementChildren(taskList);
     renderTasks(taskList);
     
-
     // console.log(projects[cardIndex].checkList[0][0]);
 
     projectDialog.showModal();
@@ -164,11 +160,18 @@ function renderTasks(taskList){
             taskWrapper.style.opacity = '0.3';
         }  else{ taskStatus.style.color = "grey";};
         
-        taskDescription.textContent = capitalizeFirst(element[1]);
+        taskDescription.textContent = generalMethods().capitalizeFirst(element[1]);
 
         taskWrapper.appendChild(taskStatus);
         taskWrapper.appendChild(taskDescription);
 
+        taskWrapper.addEventListener('click', (e)=>{
+            const tIndex = generalMethods().getIndexInParent(e.currentTarget);
+            dataManagement().toggleTask(currentIndex, tIndex);
+            dataManagement().updateStorage();
+            renderTasks(taskList);
+
+        });
 
         taskList.appendChild(taskWrapper);
     });
@@ -191,7 +194,7 @@ addTaskButton.addEventListener('click', ()=>{
     newTaskInput.type = 'text';
     newTaskInput.name = 'todo';
     newTaskInput.required = 'true';
-    newTaskInput.placeholder = 'To Do';
+    newTaskInput.placeholder = 'New Task';
 
     newTaskInputDate.type = 'date';
     newTaskInputDate.name = 'taskDate';
@@ -207,44 +210,50 @@ addTaskButton.addEventListener('click', ()=>{
     newTaskCancelButton.innerHTML ='<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m3.59 5L12 10.59L8.41 7L7 8.41L10.59 12L7 15.59L8.41 17L12 13.41L15.59 17L17 15.59L13.41 12L17 8.41z"/></svg>';
     newTaskButtonsWrapper.append(newTaskSubmitButton, newTaskCancelButton);
 
-    newTaskSubmitButton.addEventListener('submit', (e)=>{
+    newTaskForm.addEventListener('submit', (e)=>{
         e.preventDefault();
 
         const taskData = new FormData(newTaskForm);
         projects[currentIndex].checkList.push([false, taskData.get('todo')]);
 
-        
-        console.log(projects[currentIndex].checkList);
-
-        // taskList.removeChild(taskList.lastChild);
-
-        // renderTasks(taskList);
+        dataManagement().updateStorage();
+        renderTasks(taskList);
 
     });    
 
-    newTaskCancelButton.addEventListener('click', ()=>{
-        taskList.removeChild(taskList.lastChild);
+        newTaskCancelButton.addEventListener('click', ()=>{
+            taskList.removeChild(taskList.lastChild);
     });
 
     newTaskForm.append(newTaskInputsWrapper, newTaskButtonsWrapper);
     
-
-    
-
     taskList.appendChild(newTaskForm);
 
-    
-
-    };
-
-
-});
+        };
+    }
+);
 
 const closeDetailsCross = document.querySelector('.projectContent > svg:nth-child(2)');
     closeDetailsCross.addEventListener('click', (e)=>{
         e.currentTarget.parentElement.parentElement.close();
-});
+    }
+);
 
 
 //--------------------------------------------------------------------------------
 
+function generalMethods(){
+
+    const getIndexInParent= function(element){
+        const parentChildren = Array.from(element.parentElement.children);
+        const index = parentChildren.indexOf(element);
+
+        return index;
+    };
+
+    const  capitalizeFirst = function(string){
+        return String(string).charAt(0).toUpperCase() + (string).slice(1);
+    };
+
+    return {getIndexInParent, capitalizeFirst};
+}

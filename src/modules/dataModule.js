@@ -1,3 +1,4 @@
+
 export {projects, dataManagement};
 
 let projects = [];
@@ -55,8 +56,21 @@ const addProject = function(project){
 
 const deleteProject = function(index){
                 projects.splice(index, 1);
-            };
+};
 
-            return {initializeLocalStorage,updateStorage,addProject, deleteProject};
+const deleteTask = function(pIndex, tIndex){
+    projects[pIndex].checkList.splice(tIndex, 1);
+};
+
+const toggleTask = function(pIndex, tIndex){
+    
+    if(projects[pIndex].checkList[tIndex][0] === true){
+            projects[pIndex].checkList[tIndex][0] = false;
+    }else{
+        projects[pIndex].checkList[tIndex][0] = true;
+    };
+};
+
+            return {initializeLocalStorage,updateStorage,addProject, deleteProject, deleteTask, toggleTask};
             
         };
