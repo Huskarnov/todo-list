@@ -60,6 +60,7 @@ const deleteProject = function(index){
 
 const deleteTask = function(pIndex, tIndex){
     projects[pIndex].checkList.splice(tIndex, 1);
+    console.log('deleting');
 };
 
 const toggleTask = function(pIndex, tIndex){

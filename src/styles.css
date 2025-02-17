@@ -7,6 +7,7 @@
   --pearl: #EAE0CC;
   --pale: #C9ADA1;
   --sage: #A0A083;
+  --delete: #724444;
 }
 
 /* 1. Use a more-intuitive box-sizing model */
@@ -155,6 +156,9 @@ main{
   border: 5px double var(--prussian);
 
 }
+.card:hover{
+  filter:brightness(1.5);
+}
 
 .card h3{
   font-size: 2.5rem;
@@ -192,10 +196,14 @@ main{
 
 .card div:nth-child(4){
   position: absolute;
-  color: rgb(114, 68, 68);
+  color: var(--delete);
   bottom: 15px;
   right: 15px;
 }
+.card div:nth-child(4):hover{
+  transform: scale(1.5);
+}
+
 .card div:nth-child(5){
   position: absolute;
   color: var(--pearl);
@@ -371,7 +379,7 @@ main{
   min-width: 400px;
   min-height: 400px;
 
-  max-width: 500px;
+  /* max-width: 500px; */
   min-width: 400px;
 
   animation: popIn 0.1s ease-in;
@@ -409,22 +417,45 @@ main{
 .taskList{
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   gap: 10px;
   width: 100%;
-  cursor: pointer;
 
 
   margin-bottom: 3.5rem;
 
-
+  user-select: none;
 }
 .taskList > div{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 5px;
+  gap: 20px;
   font-size: 1.5rem;
+  width: 100%;
+
+  cursor: pointer;
+
+}
+
+.taskList > div > div{
+  display: flex;
+  gap: 5px;
+}
+.taskList > div > div:nth-child(1){
+  width: 100%;
+}
+
+.taskList > div > div:nth-child(2) div:nth-child(1){
+  color: var(--steel);
+}
+
+.taskList > div > div:nth-child(2) div:nth-child(2){
+  color: var(--delete);
+}
+
+.taskList > div > div:nth-child(2) div:nth-child(1):hover, .taskList > div > div:nth-child(2) div:nth-child(2):hover{
+  transform: scale(1.5);
 }
 
 .taskList >div:not(form):hover{

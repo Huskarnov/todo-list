@@ -150,8 +150,14 @@ function renderTasks(taskList){
 
     projects[currentIndex].checkList.forEach(element => {
         const taskWrapper = document.createElement('div');
+
+        const statusDescriptionWrapper = document.createElement('div');
         const taskStatus = document.createElement('div');
         const taskDescription = document.createElement('p');
+
+        const editDeleteWrapper = document.createElement('div');
+        const taskEdit = document.createElement('div');
+        const taskDelete = document.createElement('div');
 
         taskStatus.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2m-2 15l-5-5l1.41-1.41L10 14.17l7.59-7.59L19 8z"/></svg>';
         
@@ -162,11 +168,28 @@ function renderTasks(taskList){
         
         taskDescription.textContent = generalMethods().capitalizeFirst(element[1]);
 
-        taskWrapper.appendChild(taskStatus);
-        taskWrapper.appendChild(taskDescription);
+        taskEdit.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-2.3 6.35c.22-.21.22-.56 0-.77L15.42 7.3a.53.53 0 0 0-.77 0l-1 1l2.05 2.05zM7 14.94V17h2.06l6.06-6.06l-2.06-2.06z"/></svg>';
 
-        taskWrapper.addEventListener('click', (e)=>{
-            const tIndex = generalMethods().getIndexInParent(e.currentTarget);
+        taskDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
+        taskDelete.addEventListener('click', (e)=>{
+            const index = generalMethods().getIndexInParent(e.currentTarget.parentElement.parentElement);
+            console.log(currentIndex);
+            console.log(index);
+            dataManagement().deleteTask(currentIndex, index);
+            dataManagement().updateStorage();
+            renderTasks(taskList);
+        });
+        
+        statusDescriptionWrapper.appendChild(taskStatus);
+        statusDescriptionWrapper.appendChild(taskDescription);
+        taskWrapper.appendChild(statusDescriptionWrapper);
+
+        editDeleteWrapper.appendChild(taskEdit);
+        editDeleteWrapper.appendChild(taskDelete)
+        taskWrapper.appendChild(editDeleteWrapper);
+
+        statusDescriptionWrapper.addEventListener('click', (e)=>{
+            const tIndex = generalMethods().getIndexInParent(e.currentTarget.parentElement);
             dataManagement().toggleTask(currentIndex, tIndex);
             dataManagement().updateStorage();
             renderTasks(taskList);
@@ -221,7 +244,7 @@ addTaskButton.addEventListener('click', ()=>{
 
     });    
 
-        newTaskCancelButton.addEventListener('click', ()=>{
+    newTaskCancelButton.addEventListener('click', ()=>{
             taskList.removeChild(taskList.lastChild);
     });
 
