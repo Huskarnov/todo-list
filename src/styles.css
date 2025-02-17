@@ -317,6 +317,9 @@ main{
 }
 
 @media screen and  (max-width: 600px){
+  /* .projectContent{
+    padding: 0rem;
+  } */
   .new-project div{
     flex-direction: column;
     align-items: center;
@@ -334,6 +337,19 @@ main{
     flex-direction: column;
     justify-content: center;  
     align-items: center;
+  }
+
+  .taskList{
+    
+    max-width: 400px;
+
+  }
+  .taskList p{
+    
+    width: 190px;
+  
+    
+  
   }
 }
 /* ////////////////////////////////////////////////////////////////////////////// */
@@ -368,7 +384,7 @@ main{
   top:50%;
   transform: translate(-50%, -50%); 
 
-  padding: 3rem;
+  padding: 3rem 1.5rem;
 
   border: 5px double var(--prussian);
   border-radius: 15px;
@@ -383,6 +399,7 @@ main{
   min-width: 400px;
 
   animation: popIn 0.1s ease-in;
+
 
 }
 
@@ -445,7 +462,12 @@ main{
 .taskList > div > div:nth-child(1){
   width: 100%;
 }
-
+.taskList > div > div:nth-child(1) > div:nth-child(1){
+  width: 24px;
+}
+.taskList > div > div:nth-child(2){
+  width: 70px;
+}
 .taskList > div > div:nth-child(2) div:nth-child(1){
   color: var(--steel);
 }
