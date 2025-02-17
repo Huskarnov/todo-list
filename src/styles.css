@@ -153,7 +153,9 @@ main{
 
   cursor: pointer;
 
-  border: 5px double var(--prussian);
+  /* border: 5px double var(--prussian); */
+
+  box-shadow: inset var(--pearl) 3px 3px 6px 1px, inset var(--prussian) -2px -2px 6px 0px;
 
 }
 .card:hover{
@@ -170,9 +172,7 @@ main{
   width: 350px;
   text-align: center;
 }
-.card h3:hover{
-  overflow:visible;
-}
+
 
 .card p:nth-child(2){
   font-size: 1.5rem;
@@ -183,7 +183,10 @@ main{
   width: 350px;
   text-overflow: ellipsis;
   /* white-space: nowrap; */
-  overflow: hidden;
+  /* overflow: hidden; */
+  
+  /* background-color: red; */
+  /* height: 100%; */
 }
 .card p:nth-child(3){
   font-size: 1.5rem;
@@ -316,44 +319,12 @@ main{
   background-color: transparent
 }
 
-@media screen and  (max-width: 600px){
-  /* .projectContent{
-    padding: 0rem;
-  } */
-  .new-project div{
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 5px;
-    margin-bottom: 10px;
-  }
 
-  .new-project div:nth-child(5){
-    gap: 10px;
 
-    margin-top: 1rem;
-    margin-bottom: 10px;
 
-    flex-direction: column;
-    justify-content: center;  
-    align-items: center;
-  }
 
-  .taskList{
-    
-    max-width: 400px;
 
-  }
-  .taskList p{
-    
-    width: 190px;
-  
-    
-  
-  }
-}
-/* ////////////////////////////////////////////////////////////////////////////// */
-/* ////////////////////////////////////////////////////////////////////////////// */
+
 
 #projectDialog{
   top: 50%;
@@ -386,19 +357,18 @@ main{
 
   padding: 3rem 1.5rem;
 
-  border: 5px double var(--prussian);
   border-radius: 15px;
-  /* border-radius: 10% 10% 30% 30% / 10% 10% 50% 50% ; */
 
   background-color: var(--sage);
 
   min-width: 400px;
   min-height: 400px;
 
-  /* max-width: 500px; */
   min-width: 400px;
 
   animation: popIn 0.1s ease-in;
+
+  box-shadow: inset var(--pearl) 3px 3px 6px 1px, inset var(--prussian) -2px -2px 6px 0px;
 
 
 }
@@ -409,8 +379,8 @@ main{
 
 .projectContent svg:nth-child(2){
   position: absolute;
-  right: 20px;
-  top: 20px;
+  right: 10px;
+  top: 10px;
 
   width: 40px;
   height: 40px;
@@ -436,7 +406,8 @@ main{
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  width: 100%;
+  /* width: 100%; */
+  /* max-width: 800px; */
 
 
   margin-bottom: 3.5rem;
@@ -447,13 +418,23 @@ main{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+
   font-size: 1.5rem;
   width: 100%;
+  min-width: 350px;
+
+  box-shadow: inset var(--pearl) 3px 3px 6px 1px, inset var(--prussian) -2px -2px 6px 0px;
+  border-radius: 20px;
+  padding: 0.5rem 0;
 
   cursor: pointer;
 
 }
+
+.taskList p{
+  max-width: 400px;
+}
+
 
 .taskList > div > div{
   display: flex;
@@ -462,11 +443,18 @@ main{
 .taskList > div > div:nth-child(1){
   width: 100%;
 }
-.taskList > div > div:nth-child(1) > div:nth-child(1){
+
+.taskList > div > div:nth-child(1) >div:nth-child(1){
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
   width: 24px;
+
 }
+
 .taskList > div > div:nth-child(2){
-  width: 70px;
+  width: 100px;
 }
 .taskList > div > div:nth-child(2) div:nth-child(1){
   color: var(--steel);
@@ -474,6 +462,9 @@ main{
 
 .taskList > div > div:nth-child(2) div:nth-child(2){
   color: var(--delete);
+
+  margin-right: 10px;
+
 }
 
 .taskList > div > div:nth-child(2) div:nth-child(1):hover, .taskList > div > div:nth-child(2) div:nth-child(2):hover{
@@ -547,3 +538,49 @@ main{
 .projectContent form button:nth-child(2) > svg{
   color: var(--pearl);
 }
+.projectContent form svg:hover{
+  transform: scale(1.2);
+
+}
+
+/* ////////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////////////////// */
+@media screen and  (max-width: 600px){
+  /* .projectContent{
+    padding: 0rem;
+  } */
+  .new-project div{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .new-project div:nth-child(5){
+    gap: 10px;
+
+    margin-top: 1rem;
+    margin-bottom: 10px;
+
+    flex-direction: column;
+    justify-content: center;  
+    align-items: center;
+  }
+
+  .taskList{
+    
+    max-width: 400px;
+    
+
+  }
+  .taskList p{
+    
+    width: 190px;
+  
+    
+  
+  }
+}
+/* ////////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////////////////// */
