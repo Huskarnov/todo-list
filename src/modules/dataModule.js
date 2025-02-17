@@ -35,13 +35,13 @@ function initializeLocalStorage(){
         ]);
         localStorage.setItem("projects", initialData);
 
-    }else{
-
-    projects = JSON.parse(localStorage.getItem("projects"));
     };
+    fillProjectsFromLocalStorage();
 };
 
-
+function fillProjectsFromLocalStorage(){
+    projects = JSON.parse(localStorage.getItem("projects"));
+};
 
 function updateStorage(){
     const projectsString = JSON.stringify(projects);
