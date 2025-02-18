@@ -11,7 +11,7 @@ function initializeLocalStorage(){
         
         localStorage.setItem("visited", "true");
 
-        const initialData = JSON.stringify([{   title: "Omelette chopping",
+        const initialData = JSON.stringify([{   title: "Omelette shopping",
             description: "Buy all ingredients to make an omelette",
             dueDate: "2025/03/25",
             checkList: [[false, "buy eggs"],
@@ -19,7 +19,7 @@ function initializeLocalStorage(){
                         [false, "buy salt"]]
         },
         {   title: "Vegas trip",
-            description: "Do things that will stay there",
+            description: "Do things that will stay in vegas",
             dueDate: "2025/03/25",
             checkList: [[true, "do powder"],
                         [false, "cross dress"],

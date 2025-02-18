@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Rye&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Rye&display=swap'); */
 
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rye&display=swap');
 :root{
   --prussian: #182A40;
   --steel: #5A7D9D;
@@ -22,7 +22,7 @@
     
     -webkit-font-smoothing: antialiased;
 
-    font-family: 'MedievalSharp';
+    font-family: 'Montserrat';
     
     font-size: 62.5%;
 
@@ -67,6 +67,8 @@ header{
   justify-content: center;
 
   padding: 1rem 0;
+
+  user-select: none;
 }
 header > div{
   display: flex;
@@ -115,6 +117,41 @@ header svg:not(:hover) {
   100% {color: var(--steel);}
 }
 
+header > div > button{
+
+  font-size: 1.5rem;
+  color: var(--prussian);
+
+  margin-top: 1.5rem;
+  background-color: var(--steel);
+
+  border-radius: 15px;
+
+  padding: 10px;
+
+  user-select: none;
+
+  cursor: pointer;
+
+  /* border: 5px double var(--prussian); */
+
+  box-shadow: inset var(--sage) 3px 3px 4px 1px, inset var(--prussian) -2px -2px 6px 0px;
+
+  font-weight: 900;
+  border-color: var(--steel);
+
+  border: none;
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+}
+header > div > button:active{
+  transform: scale(0.98);
+}
+header > div > button:hover{
+  filter: brightness(1.2);
+}
+
 main{
   display: flex;
   justify-content: center;}
@@ -125,12 +162,12 @@ main{
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 
-  gap: 10px;
+  gap: 15px;
 
   padding-top: 1rem;
 
   min-width: 400px;
-  max-width: 1220px;
+  max-width: 1300px;
 }
 
 .card{
@@ -157,13 +194,14 @@ main{
 
   box-shadow: inset var(--pearl) 3px 3px 6px 1px, inset var(--prussian) -2px -2px 6px 0px;
 
+  font-weight: 600;
 }
 .card:hover{
   filter:brightness(1.5);
 }
 
 .card h3{
-  font-size: 2.5rem;
+  font-size: 2rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -178,15 +216,16 @@ main{
   font-size: 1.5rem;
   font-weight: 500;
 
-  line-clamp: 3;
-
   width: 350px;
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
-  /* overflow: hidden; */
+  overflow: hidden;
+  text-wrap: wrap;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
   
-  /* background-color: red; */
-  /* height: 100%; */
 }
 .card p:nth-child(3){
   font-size: 1.5rem;
@@ -194,6 +233,7 @@ main{
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+
 
 }
 
@@ -311,12 +351,15 @@ main{
   border-radius: 15px;
   padding: 0.5rem 2rem;
 }
+.new-project button:hover{
+  filter: brightness(1.2);
 
+}
 .new-project button:nth-child(1){
   background-color: var(--steel);
 }
 .new-project button:nth-child(2){
-  background-color: transparent
+  background-color: var(--sage);
 }
 
 
@@ -348,7 +391,7 @@ main{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 2rem;
 
   position: absolute;
   left: 50%;
@@ -399,6 +442,8 @@ main{
 }
 .projectContent > svg:nth-child(2):hover, .projectContent > svg:last-child:hover{
   color: var(--pearl);
+  cursor: pointer;
+  
 }
 
 .taskList{
@@ -420,6 +465,9 @@ main{
   align-items: center;
 
   font-size: 1.5rem;
+  font-weight: 500;
+  
+  /* white-space: now; */
   width: 100%;
   min-width: 350px;
 
@@ -429,10 +477,15 @@ main{
 
   cursor: pointer;
 
+
+
+
 }
 
 .taskList p{
   max-width: 400px;
+  text-wrap: wrap;
+
 }
 
 
@@ -473,7 +526,6 @@ main{
 
 .taskList >div:not(form):hover{
   filter: brightness(2);
-  text-shadow: 2px 2px 5px white;
 }
 
 .projectContent form{
@@ -540,6 +592,7 @@ main{
 }
 .projectContent form svg:hover{
   transform: scale(1.2);
+  cursor: pointer;
 
 }
 

@@ -67,7 +67,7 @@ return {createCard, renderCards}
 //--------------------------------------------------------------------------------
 //New project 
 
-const newProjectButton = document.querySelector('header svg');
+const newProjectButton = document.querySelector('header button');
 const newProjectDialog = document.querySelector('#dialog-form');
 const projectForm = document.querySelector('.new-project');
 const cancelProjectButton = document.querySelector('#new-project-cancel');
@@ -204,7 +204,7 @@ function renderTasks(taskList){
 const addTaskButton = document.querySelector('.projectContent > svg:last-child');
 addTaskButton.addEventListener('click', ()=>{
 
-    if((taskList.lastChild.nodeName === 'DIV')){
+    if((taskList.children.length == 0) || !(taskList.lastChild.nodeName === 'FROM')){
 
     const newTaskForm = document.createElement('form');
     const newTaskInputsWrapper = document.createElement('div');
