@@ -313,7 +313,7 @@ main{
   padding: 2rem;
 
   border: 5px double var(--prussian);
-  border-radius: 10% 10% 30% 30% / 10% 10% 50% 50% ;
+  border-radius: 15px;
 
   background-color: var(--sage);
 
@@ -339,6 +339,7 @@ main{
 
 .new-project div label{
   font-size: 2rem;
+  font-weight: 500;
   border-radius: 15px;
   width: 11rem;
 }
