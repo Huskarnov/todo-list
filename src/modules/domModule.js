@@ -13,7 +13,7 @@ const createCard = function(project){
     let card = document.createElement('div');
     card.classList.add('card');
 
-    let title = document.createElement('h3');
+    let title = document.createElement('h2');
     let description = document.createElement('p');
     let dueDate = document.createElement('p');
     let crossDelete = document.createElement('div');
@@ -22,7 +22,7 @@ const createCard = function(project){
     description.textContent = project.description;
     dueDate.textContent = project.dueDate;
 
-    crossDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
+    crossDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
     crossDelete.style.display ='none';
     crossDelete.addEventListener('click', (event)=>{
         event.stopPropagation();
@@ -116,7 +116,7 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
 //Project details
 
     const projectDialog = document.querySelector('#projectDialog');
-    const projectTitle = document.querySelector('.projectContent h1');
+    const projectTitle = document.querySelector('.projectContent h3');
 
     projectDialog.addEventListener('click', (e)=>{
         if(e.target == e.currentTarget){e.currentTarget.close();};
@@ -201,10 +201,10 @@ function renderTasks(taskList){
 };
 
 
-const addTaskButton = document.querySelector('.projectContent > svg:last-child');
+const addTaskButton = document.querySelector('.projectContent > button:last-child');
 addTaskButton.addEventListener('click', ()=>{
 
-    if((taskList.children.length == 0) || !(taskList.lastChild.nodeName === 'FROM')){
+    if((taskList.children.length == 0) || (taskList.lastChild.nodeName === 'DIV')){
 
     const newTaskForm = document.createElement('form');
     const newTaskInputsWrapper = document.createElement('div');
