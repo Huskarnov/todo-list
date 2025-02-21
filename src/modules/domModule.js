@@ -188,11 +188,17 @@ function renderTasks(taskList){
         editDeleteWrapper.appendChild(taskDelete)
         taskWrapper.appendChild(editDeleteWrapper);
 
-        statusDescriptionWrapper.addEventListener('click', (e)=>{
-            const tIndex = generalMethods().getIndexInParent(e.currentTarget.parentElement);
-            dataManagement().toggleTask(currentIndex, tIndex);
-            dataManagement().updateStorage();
-            renderTasks(taskList);
+        taskWrapper.addEventListener('click', (e)=>{
+            // e.stopPropagation();
+            if(!(e.target.nodeName === "svg") && !(e.target.nodeName === "path")){
+                const tIndex = generalMethods().getIndexInParent(e.currentTarget);
+                dataManagement().toggleTask(currentIndex, tIndex);
+                dataManagement().updateStorage();
+                renderTasks(taskList); 
+                console.log(e.target.nodeName);
+            };
+        
+            
 
         });
 
