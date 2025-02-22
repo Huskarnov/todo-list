@@ -178,19 +178,33 @@ function renderTasks(taskList){
 
             if(projects[currentIndex].checkList[index][0] === false){   
 
-            const taskEditForm = document.createElement('form');
+            const taskEditForm = document.createElement('form'); taskEditForm.classList.add('editTask');
             const taskEditInput = document.createElement('input');
             const taskEditButtonSubmit = document.createElement('button');
             const taskEditButtonCancel = document.createElement('button');
 
-
+            taskEditInput.value = projects[currentIndex].checkList[index][1];
+            taskEditButtonSubmit.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="m10 17l-5-5l1.41-1.42L10 14.17l7.59-7.59L19 8m-7-6A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>';
+            taskEditButtonCancel.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33 " viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m3.59 5L12 10.59L8.41 7L7 8.41L10.59 12L7 15.59L8.41 17L12 13.41L15.59 17L17 15.59L13.41 12L17 8.41z"/></svg>';    
             
+            taskEditButtonSubmit.addEventListener('click', (e)=>{
+                e.preventDefault();
+                projects[currentIndex].checkList[index][1] = taskEditInput.value;
+                renderTasks(taskList);
+                dataManagement().updateStorage();
+            });
+
+            taskEditButtonCancel.addEventListener('click', (e)=>{
+                e.preventDefault();
+                taskList.removeChild(e.currentTarget.parentElement.parentElement);
+                renderTasks(taskList);
+                
+            });
+
 
             taskEditForm.appendChild(taskEditInput);
             taskEditForm.appendChild(taskEditButtonSubmit);
             taskEditForm.appendChild(taskEditButtonCancel);
-
-            taskEditInput.textContent = projects[currentIndex].checkList[index][1];
 
             clearElementChildren(currentTask);
             currentTask.appendChild(taskEditForm);
@@ -203,6 +217,7 @@ function renderTasks(taskList){
 
         taskDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
         taskDelete.addEventListener('click', (e)=>{
+            e.stopPropagation();
             const index = generalMethods().getIndexInParent(e.currentTarget.parentElement.parentElement);
 
             if(projects[currentIndex].checkList[index][0] === false){   
@@ -222,13 +237,15 @@ function renderTasks(taskList){
         taskWrapper.appendChild(editDeleteWrapper);
 
         taskWrapper.addEventListener('click', (e)=>{
-            // e.stopPropagation();
-            if(!(e.target.nodeName === "svg") && !(e.target.nodeName === "path") && !(e.target.nodeName === "BUTTON") && !(e.target.nodeName === "INPUT")){
+            // e.stopPropagation(); !(e.target.nodeName === "svg") && !(e.target.nodeName === "path") && !(e.target.nodeName === "BUTTON") && !(e.target.nodeName === "INPUT")
+                
+                if(e.currentTarget.children.length === 2){
                 const tIndex = generalMethods().getIndexInParent(e.currentTarget);
                 dataManagement().toggleTask(currentIndex, tIndex);
                 dataManagement().updateStorage();
                 renderTasks(taskList); 
             };
+            
         }
     );
 

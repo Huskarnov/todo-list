@@ -415,13 +415,13 @@ main{
 
 }
 
-.projectContent h3{
+.projectContent > h3{
   font-size: 2.5rem;
   user-select: none;
   text-align: center;
 }
 
-.projectContent svg:nth-child(2){
+.projectContent > svg:nth-child(2){
   position: absolute;
   right: 10px;
   top: 10px;
@@ -555,7 +555,38 @@ main{
   text-shadow: 1px 1px 2px var(--pearl);
 }
 
-.projectContent form{
+
+.editTask {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+
+  font-size: 1.5rem;
+
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.editTask > input:nth-child(1){
+  width: 70%;
+  /* height: 50px; */
+  font-size: 1.5rem;
+  text-indent: 0.5rem;
+  border-radius: 10px;
+  
+}
+.editTask > button{
+  display: flex;
+  background-color: transparent;
+  border: none;
+
+}
+
+
+
+.projectContent .taskList > form{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -570,12 +601,12 @@ main{
   100%{ opacity: 1;}
   
 }
-.projectContent form > div:nth-child(1){
+.projectContent .taskList > form > div:nth-child(1){
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-.projectContent input{
+.projectContent .taskList > form input{
   width: 90%;
   align-self: center;
   font-size: 2rem;
@@ -586,38 +617,38 @@ main{
 
   background-color: var(--pearl);
 }
-.projectContent input:first-child::placeholder{
+.projectContent .taskList > form input:first-child::placeholder{
   text-align: center;
 }
-.projectContent input:nth-child(2){
+.projectContent .taskList > form input:nth-child(2){
   text-align: center;
 }
 
-.projectContent form > div:nth-child(2){
+.projectContent .taskList > form div:nth-child(2){
   display: flex;
   gap: 15px;
 
   /* margin-bottom: 3rem; */
 }
 
-.projectContent form button {
+.projectContent .taskList > form button {
   border-radius: 50%;
   border-color: transparent;
   background-color: transparent;
 }
 
-.projectContent form button > svg{
+.projectContent .taskList > form button svg{
   height: 50px;
   width: 50px;
 }
 
-.projectContent form button:nth-child(1) > svg{
+.projectContent .taskList > form button:nth-child(1) > svg{
   color: var(--steel);
 }
-.projectContent form button:nth-child(2) > svg{
+.projectContent .taskList > form button:nth-child(2) > svg{
   color: var(--pearl);
 }
-.projectContent form svg:hover{
+.projectContent .taskList > form svg:hover{
   transform: scale(1.2);
   cursor: pointer;
 
