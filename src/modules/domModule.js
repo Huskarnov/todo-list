@@ -169,15 +169,48 @@ function renderTasks(taskList){
         taskDescription.textContent = generalMethods().capitalizeFirst(element[1]);
 
         taskEdit.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-2.3 6.35c.22-.21.22-.56 0-.77L15.42 7.3a.53.53 0 0 0-.77 0l-1 1l2.05 2.05zM7 14.94V17h2.06l6.06-6.06l-2.06-2.06z"/></svg>';
+        taskEdit.addEventListener('click', (e)=>{
+
+            e.stopPropagation();
+
+            const currentTask = e.currentTarget.parentElement.parentElement;
+            const index = generalMethods().getIndexInParent(currentTask);
+
+            if(projects[currentIndex].checkList[index][0] === false){   
+
+            const taskEditForm = document.createElement('form');
+            const taskEditInput = document.createElement('input');
+            const taskEditButtonSubmit = document.createElement('button');
+            const taskEditButtonCancel = document.createElement('button');
+
+
+            
+
+            taskEditForm.appendChild(taskEditInput);
+            taskEditForm.appendChild(taskEditButtonSubmit);
+            taskEditForm.appendChild(taskEditButtonCancel);
+
+            taskEditInput.textContent = projects[currentIndex].checkList[index][1];
+
+            clearElementChildren(currentTask);
+            currentTask.appendChild(taskEditForm);
+
+
+            };
+        }
+    ); 
+
 
         taskDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
         taskDelete.addEventListener('click', (e)=>{
             const index = generalMethods().getIndexInParent(e.currentTarget.parentElement.parentElement);
-            console.log(currentIndex);
-            console.log(index);
+
+            if(projects[currentIndex].checkList[index][0] === false){   
             dataManagement().deleteTask(currentIndex, index);
             dataManagement().updateStorage();
             renderTasks(taskList);
+            };
+
         });
         
         statusDescriptionWrapper.appendChild(taskStatus);
@@ -190,17 +223,14 @@ function renderTasks(taskList){
 
         taskWrapper.addEventListener('click', (e)=>{
             // e.stopPropagation();
-            if(!(e.target.nodeName === "svg") && !(e.target.nodeName === "path")){
+            if(!(e.target.nodeName === "svg") && !(e.target.nodeName === "path") && !(e.target.nodeName === "BUTTON") && !(e.target.nodeName === "INPUT")){
                 const tIndex = generalMethods().getIndexInParent(e.currentTarget);
                 dataManagement().toggleTask(currentIndex, tIndex);
                 dataManagement().updateStorage();
                 renderTasks(taskList); 
-                console.log(e.target.nodeName);
             };
-        
-            
-
-        });
+        }
+    );
 
         taskList.appendChild(taskWrapper);
     });

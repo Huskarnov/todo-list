@@ -5,5 +5,3 @@ import { dataManagement } from './modules/dataModule';
 
 dataManagement().initializeLocalStorage();
 cardManagement().renderCards();
-
-console.log('vx');
