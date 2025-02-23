@@ -13,21 +13,21 @@ function initializeLocalStorage(){
 
         const initialData = JSON.stringify([{   title: "Omelette shopping",
             description: "Buy all ingredients to make an omelette",
-            dueDate: "2025/03/25",
+            dueDate: "2025-03-25",
             checkList: [[false, "buy eggs"],
                         [true, "buy oil"],
                         [false, "buy salt"]]
         },
         {   title: "Vegas trip",
             description: "Do things that will stay in vegas",
-            dueDate: "2025/03/25",
+            dueDate: "2025-03-25",
             checkList: [[true, "do powder"],
                         [false, "cross dress"],
                         [false, "gamble away all savings"]]
         },
         {   title: "Virus upgrade",
             description: "Operate gain of function research",
-            dueDate: "2025/03/25",
+            dueDate: "2025-03-25",
             checkList: [[false, "modify genes"],
                         [false, "wear hazmat"],
                         [true, "inject bats with result"]]
