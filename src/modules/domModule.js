@@ -129,7 +129,7 @@ const showProjectDetails = function(event){
     projectTitle.textContent = projects[currentIndex].title;
 
     clearElementChildren(taskList);
-    renderTasks(taskList);
+    renderTasks();
     
     // console.log(projects[cardIndex].checkList[0][0]);
 
@@ -144,7 +144,7 @@ const clearElementChildren = function(element){
     };
 };
 
-function renderTasks(taskList){
+function renderTasks(){
 
     clearElementChildren(taskList);
 
@@ -170,12 +170,11 @@ function renderTasks(taskList){
 
         taskEdit.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-2.3 6.35c.22-.21.22-.56 0-.77L15.42 7.3a.53.53 0 0 0-.77 0l-1 1l2.05 2.05zM7 14.94V17h2.06l6.06-6.06l-2.06-2.06z"/></svg>';
         taskEdit.addEventListener('click', (e)=>{
-
+            
             e.stopPropagation();
-
             const currentTask = e.currentTarget.parentElement.parentElement;
             const index = generalMethods().getIndexInParent(currentTask);
-
+            
             if(projects[currentIndex].checkList[index][0] === false){   
 
             const taskEditForm = document.createElement('form'); taskEditForm.classList.add('editTask');
@@ -190,14 +189,14 @@ function renderTasks(taskList){
             taskEditButtonSubmit.addEventListener('click', (e)=>{
                 e.preventDefault();
                 projects[currentIndex].checkList[index][1] = taskEditInput.value;
-                renderTasks(taskList);
+                renderTasks();
                 dataManagement().updateStorage();
             });
 
             taskEditButtonCancel.addEventListener('click', (e)=>{
                 e.preventDefault();
                 taskList.removeChild(e.currentTarget.parentElement.parentElement);
-                renderTasks(taskList);
+                renderTasks();
                 
             });
 
@@ -223,7 +222,7 @@ function renderTasks(taskList){
             if(projects[currentIndex].checkList[index][0] === false){   
             dataManagement().deleteTask(currentIndex, index);
             dataManagement().updateStorage();
-            renderTasks(taskList);
+            renderTasks();
             };
 
         });
@@ -243,7 +242,7 @@ function renderTasks(taskList){
                 const tIndex = generalMethods().getIndexInParent(e.currentTarget);
                 dataManagement().toggleTask(currentIndex, tIndex);
                 dataManagement().updateStorage();
-                renderTasks(taskList); 
+                renderTasks(); 
             };
             
         }
@@ -293,7 +292,7 @@ addTaskButton.addEventListener('click', ()=>{
         projects[currentIndex].checkList.push([false, taskData.get('todo')]);
 
         dataManagement().updateStorage();
-        renderTasks(taskList);
+        renderTasks();
 
     });    
 

@@ -78,7 +78,7 @@ Dialog{
   left: 50%;
   transform: translate(-50%, -50%); 
   
-  backdrop-filter: grayscale(1) brightness(0.5);
+  backdrop-filter: grayscale(1) brightness(0.2);
 
   background-color: transparent;
 
@@ -367,7 +367,7 @@ main{
   justify-content: center;  
 
   margin-top: 2rem;
-  margin-bottom: 6rem;
+  margin-bottom: 2rem;
 }
 
 .new-project button{
