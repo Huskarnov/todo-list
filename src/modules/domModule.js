@@ -56,7 +56,7 @@ const createCard = function(project){
 
 const renderCards = function(){
 
-    clearElementChildren(cardGrid);
+    generalMethods().clearElementChildren(cardGrid);
 
     for(let i = 0; i < projects.length; i++){
         cardGrid.appendChild(createCard(projects[i]));
@@ -130,7 +130,7 @@ const showProjectDetails = function(event){
 
     projectTitle.textContent = projects[currentIndex].title;
 
-    clearElementChildren(taskList);
+    generalMethods().clearElementChildren(taskList);
     renderTasks();
     
     // console.log(projects[cardIndex].checkList[0][0]);
@@ -138,27 +138,49 @@ const showProjectDetails = function(event){
     projectDialog.showModal();
 };
 
-const clearElementChildren = function(element){
-    if(element.children.length > 0){
-        for (let i = element.children.length; i > 0; i--){
-            element.removeChild(element.lastChild);
-        };
-    };
-};
+
 
 function renderTasks(){
 
-    clearElementChildren(taskList);
+    generalMethods().clearElementChildren(taskList);
 
     projects[currentIndex].checkList.forEach(task => {
-        renderOneTask(task);
+        
+        taskList.appendChild(renderOneTask(task));
+
     });
 };
 
 function renderOneTask(task){
     
+    const actualTask = task;
     const taskWrapper = document.createElement('div');
+    const statusDescriptionWrapper = renderTaskContent(task).statusDescriptionWrapper;
+    const editDeleteWrapper = renderTaskContent(task).editDeleteWrapper;
 
+    taskWrapper.appendChild(statusDescriptionWrapper);
+    taskWrapper.appendChild(editDeleteWrapper);
+    taskWrapper.addEventListener('click', (e)=>{
+        // e.stopPropagation(); !(e.target.nodeName === "svg") && !(e.target.nodeName === "path") && !(e.target.nodeName === "BUTTON") && !(e.target.nodeName === "INPUT")
+            
+            if(e.currentTarget.children.length === 2){
+            const tIndex = generalMethods().getIndexInParent(e.currentTarget);
+
+            generalMethods().toggleTaskwrapper(taskWrapper, currentIndex, tIndex, actualTask);
+        };
+        
+    }
+);
+    if(task[0] === true){
+        taskWrapper.style.opacity = '0.3';
+    };
+
+    return taskWrapper;
+};
+
+function renderTaskContent(task){
+
+    const taskRTC = task;
     const statusDescriptionWrapper = document.createElement('div');
     const taskStatus = document.createElement('div');
     const taskDescription = document.createElement('p');
@@ -169,10 +191,7 @@ function renderOneTask(task){
 
     taskStatus.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>';
     
-    if(task[0] === true){
-        taskStatus.style.color = "green";
-        taskWrapper.style.opacity = '0.3';
-    }  else{ taskStatus.style.color = "transparent";};
+    taskStatus.style.color = "green";
     
     taskDescription.textContent = generalMethods().capitalizeFirst(task[1]);
 
@@ -195,16 +214,31 @@ function renderOneTask(task){
         taskEditButtonCancel.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33 " viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m3.59 5L12 10.59L8.41 7L7 8.41L10.59 12L7 15.59L8.41 17L12 13.41L15.59 17L17 15.59L13.41 12L17 8.41z"/></svg>';    
         
         taskEditButtonSubmit.addEventListener('click', (e)=>{
+            const parent = e.currentTarget.parentElement.parentElement;
             e.preventDefault();
+            e.stopPropagation();
             projects[currentIndex].checkList[index][1] = taskEditInput.value;
-            renderTasks();
+
+            generalMethods().clearElementChildren(parent);
+            parent.appendChild(renderTaskContent(taskRTC).statusDescriptionWrapper);
+            parent.appendChild(renderTaskContent(taskRTC).editDeleteWrapper);
+
+            
+
+            // renderTasks();
+
             dataManagement().updateStorage();
         });
 
         taskEditButtonCancel.addEventListener('click', (e)=>{
             e.preventDefault();
-            taskList.removeChild(e.currentTarget.parentElement.parentElement);
-            renderTasks();
+            e.stopPropagation();
+            // taskList.removeChild(e.currentTarget.parentElement.parentElement);
+            // renderTasks();
+            const parent = e.currentTarget.parentElement.parentElement;
+            generalMethods().clearElementChildren(parent);
+            parent.appendChild(renderTaskContent(taskRTC).statusDescriptionWrapper);
+            parent.appendChild(renderTaskContent(taskRTC).editDeleteWrapper);
             
         });
 
@@ -213,7 +247,7 @@ function renderOneTask(task){
         taskEditForm.appendChild(taskEditButtonSubmit);
         taskEditForm.appendChild(taskEditButtonCancel);
 
-        clearElementChildren(currentTask);
+        generalMethods().clearElementChildren(currentTask);
         currentTask.appendChild(taskEditForm);
 
 
@@ -237,27 +271,12 @@ function renderOneTask(task){
     
     statusDescriptionWrapper.appendChild(taskStatus);
     statusDescriptionWrapper.appendChild(taskDescription);
-    taskWrapper.appendChild(statusDescriptionWrapper);
+
 
     editDeleteWrapper.appendChild(taskEdit);
     editDeleteWrapper.appendChild(taskDelete)
-    taskWrapper.appendChild(editDeleteWrapper);
 
-    taskWrapper.addEventListener('click', (e)=>{
-        // e.stopPropagation(); !(e.target.nodeName === "svg") && !(e.target.nodeName === "path") && !(e.target.nodeName === "BUTTON") && !(e.target.nodeName === "INPUT")
-            
-            if(e.currentTarget.children.length === 2){
-            const tIndex = generalMethods().getIndexInParent(e.currentTarget);
-            dataManagement().toggleTask(currentIndex, tIndex);
-            dataManagement().updateStorage();
-            renderTasks(); 
-        };
-        
-    }
-);
-
-    taskList.appendChild(taskWrapper);
-
+    return {statusDescriptionWrapper, editDeleteWrapper};
 };
 
 
@@ -340,5 +359,22 @@ function generalMethods(){
         return String(string).charAt(0).toUpperCase() + (string).slice(1);
     };
 
-    return {getIndexInParent, capitalizeFirst};
+    const clearElementChildren = function(element){
+        if(element.children.length > 0){
+            for (let i = element.children.length; i > 0; i--){
+                element.removeChild(element.lastChild);
+            };
+        };
+    };
+
+    const toggleTaskwrapper= function(taskWrapper, currentIndex, tIndex, actualTask){
+        dataManagement().toggleTask(currentIndex, tIndex);
+        dataManagement().updateStorage();
+        // clearElementChildren(taskWrapper);
+        if(actualTask[0] === true){
+            taskWrapper.style.opacity = '0.3';
+        }else{taskWrapper.style.opacity = '1';};
+    };
+
+    return {capitalizeFirst, getIndexInParent, clearElementChildren, toggleTaskwrapper};
 }
