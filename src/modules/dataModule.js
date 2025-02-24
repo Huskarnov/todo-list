@@ -14,23 +14,23 @@ function initializeLocalStorage(){
         const initialData = JSON.stringify([{   title: "Omelette shopping",
             description: "Buy all ingredients to make an omelette",
             dueDate: "2025-03-25",
-            checkList: [[false, "buy eggs"],
-                        [true, "buy oil"],
-                        [false, "buy salt"]]
+            checkList: [[false, "buy eggs", 1],
+                        [true, "buy oil", 1],
+                        [false, "buy salt", 1]]
         },
         {   title: "Vegas trip",
             description: "Do things that will stay in vegas",
             dueDate: "2025-03-25",
-            checkList: [[true, "do powder"],
-                        [false, "cross dress"],
-                        [false, "gamble away all savings"]]
+            checkList: [[true, "do powder", 2],
+                        [false, "cross dress", 2],
+                        [false, "gamble away all savings", 1]]
         },
         {   title: "Virus upgrade",
             description: "Operate gain of function research",
             dueDate: "2025-03-25",
-            checkList: [[false, "modify genes"],
-                        [false, "wear hazmat"],
-                        [true, "inject bats with result"]]
+            checkList: [[false, "modify genes", 3],
+                        [false, "wear hazmat",3],
+                        [true, "inject bats with result", 1]]
         }
         ]);
         localStorage.setItem("projects", initialData);

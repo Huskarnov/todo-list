@@ -191,7 +191,7 @@ function renderTaskContent(task){
 
     taskStatus.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>';
     
-    taskStatus.style.color = "green";
+    taskStatus.style.color = (taskRTC[2] === 1)? "red": (taskRTC[2] === 2)? "orange" : "yellow";
     
     taskDescription.textContent = generalMethods().capitalizeFirst(task[1]);
 
@@ -290,6 +290,7 @@ addTaskButton.addEventListener('click', ()=>{
     const newTaskInputsWrapper = document.createElement('div');
     const newTaskInput = document.createElement('input');
     const newTaskInputDate = document.createElement('input');
+    // const newTaskInputRadio = document.createElement('input');
     const newTaskButtonsWrapper = document.createElement('div');
     const newTaskSubmitButton = document.createElement('button');
     const newTaskCancelButton = document.createElement('button');
