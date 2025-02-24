@@ -290,7 +290,11 @@ addTaskButton.addEventListener('click', ()=>{
     const newTaskInputsWrapper = document.createElement('div');
     const newTaskInput = document.createElement('input');
     const newTaskInputDate = document.createElement('input');
-    // const newTaskInputRadio = document.createElement('input');
+    const newTaskRadioWrapper = document.createElement('div');
+    const newTaskRadioTitle = document.createElement('h4');
+    const newTaskInputRadioLow = document.createElement('input');
+    const newTaskInputRadioMedium = document.createElement('input');
+    const newTaskInputRadioHeigh = document.createElement('input');
     const newTaskButtonsWrapper = document.createElement('div');
     const newTaskSubmitButton = document.createElement('button');
     const newTaskCancelButton = document.createElement('button');
@@ -304,7 +308,14 @@ addTaskButton.addEventListener('click', ()=>{
     newTaskInputDate.name = 'taskDate';
     newTaskInputDate.required = 'true';
 
-    newTaskInputsWrapper.append(newTaskInput, newTaskInputDate);
+    newTaskRadioTitle.textContent = "Priority";
+    Object.assign(newTaskInputRadioLow, {type:"radio", id:"low", name:"priority", value: 1});
+    Object.assign(newTaskInputRadioMedium, {type:"radio", id:"medium", name:"priority", value: 2});
+    Object.assign(newTaskInputRadioHeigh, {type:"radio", id:"heigh", name:"priority", value: 3});
+
+    newTaskRadioWrapper.append(newTaskRadioTitle, newTaskInputRadioLow, newTaskInputRadioMedium, newTaskInputRadioHeigh)
+
+    newTaskInputsWrapper.append(newTaskInput, newTaskInputDate, newTaskRadioWrapper);
 
 
     newTaskSubmitButton.type = 'submit';

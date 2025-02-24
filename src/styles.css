@@ -8,7 +8,9 @@
   --pale: #C9ADA1;
   --sage: #A0A083;
   --delete: #724444;
+
 }
+
 
 /* 1. Use a more-intuitive box-sizing model */
 *, *::before, *::after {
@@ -77,10 +79,6 @@ Dialog{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); 
-  
-  backdrop-filter: grayscale(1) brightness(0.2);
-
-  background-color: transparent;
 
   width: 100dvw;
   height: 100dvh;
@@ -88,6 +86,12 @@ Dialog{
   border: none;
   outline: none;
   animation: popIn 0.1s ease-in;
+  
+  background-color: rebeccapurple;
+}
+
+dialog::backdrop {
+  background: #0000009f;
 }
 /* //////////////////////////////////////////////// */
 header{
