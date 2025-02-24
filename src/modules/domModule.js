@@ -290,11 +290,16 @@ addTaskButton.addEventListener('click', ()=>{
     const newTaskInputsWrapper = document.createElement('div');
     const newTaskInput = document.createElement('input');
     const newTaskInputDate = document.createElement('input');
+
     const newTaskRadioWrapper = document.createElement('div');
     const newTaskRadioTitle = document.createElement('h4');
+    const divLow = document.createElement('div');
     const newTaskInputRadioLow = document.createElement('input');
+    const divMed = document.createElement('div');
     const newTaskInputRadioMedium = document.createElement('input');
+    const divHigh = document.createElement('div');
     const newTaskInputRadioHeigh = document.createElement('input');
+
     const newTaskButtonsWrapper = document.createElement('div');
     const newTaskSubmitButton = document.createElement('button');
     const newTaskCancelButton = document.createElement('button');
@@ -302,7 +307,7 @@ addTaskButton.addEventListener('click', ()=>{
     newTaskInput.type = 'text';
     newTaskInput.name = 'todo';
     newTaskInput.required = 'true';
-    newTaskInput.placeholder = 'New Task';
+    newTaskInput.placeholder = 'Description';
 
     newTaskInputDate.type = 'date';
     newTaskInputDate.name = 'taskDate';
@@ -310,10 +315,14 @@ addTaskButton.addEventListener('click', ()=>{
 
     newTaskRadioTitle.textContent = "Priority";
     Object.assign(newTaskInputRadioLow, {type:"radio", id:"low", name:"priority", value: 1});
-    Object.assign(newTaskInputRadioMedium, {type:"radio", id:"medium", name:"priority", value: 2});
+    Object.assign(newTaskInputRadioMedium, {type:"radio", id:"medium", name:"priority", value: 2, checked: "checked"});
     Object.assign(newTaskInputRadioHeigh, {type:"radio", id:"heigh", name:"priority", value: 3});
 
-    newTaskRadioWrapper.append(newTaskRadioTitle, newTaskInputRadioLow, newTaskInputRadioMedium, newTaskInputRadioHeigh)
+    newTaskRadioWrapper.classList.add('priorityRadio');
+    divLow.appendChild(newTaskInputRadioLow);
+    divMed.appendChild(newTaskInputRadioMedium);
+    divHigh.appendChild(newTaskInputRadioHeigh);
+    newTaskRadioWrapper.append(newTaskRadioTitle, divLow , divMed, divHigh)
 
     newTaskInputsWrapper.append(newTaskInput, newTaskInputDate, newTaskRadioWrapper);
 
