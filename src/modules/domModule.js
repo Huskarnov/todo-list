@@ -32,7 +32,7 @@ const createCard = function(project){
 
         dataManagement().deleteProject(index);
         dataManagement().updateStorage();
-        cardManagement().renderCards();
+        cardGrid.removeChild(crossDelete.parentElement);
     });
 
     card.appendChild(title);
@@ -162,7 +162,7 @@ function renderOneTask(task){
     taskWrapper.appendChild(editDeleteWrapper);
     taskWrapper.addEventListener('click', (e)=>{
         // e.stopPropagation(); !(e.target.nodeName === "svg") && !(e.target.nodeName === "path") && !(e.target.nodeName === "BUTTON") && !(e.target.nodeName === "INPUT")
-            
+            // e.stopPropagation();
             if(e.currentTarget.children.length === 2){
             const tIndex = generalMethods().getIndexInParent(e.currentTarget);
 
@@ -190,8 +190,34 @@ function renderTaskContent(task){
     const taskDelete = document.createElement('div');
 
     taskStatus.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>';
+    taskStatus.style.color = (taskRTC[2] == 1)? "yellow": (taskRTC[2] == 2)? "orange" : "red";
+    taskStatus.addEventListener('click', (e)=>{
+
+        e.stopPropagation();
+        const index = generalMethods().getIndexInParent(taskStatus.parentElement.parentElement);
+        // if(projects[currentIndex].checkList[index][0] === false){
+        switch(taskRTC[2]){
+            case 1:
+                taskRTC[2] = 2;
+                projects[currentIndex].checkList[index][2] = 2;
+                taskStatus.style.color = "orange";
+            break;
+
+            case 2:
+                taskRTC[2] = 3;
+                projects[currentIndex].checkList[index][2] = 3;
+                taskStatus.style.color = "red";
+            break;
+
+            case 3:
+                taskRTC[2] = 1;
+                projects[currentIndex].checkList[index][2] = 1;
+                taskStatus.style.color = "yellow";
+            break;
+        };
     
-    taskStatus.style.color = (taskRTC[2] === 1)? "red": (taskRTC[2] === 2)? "orange" : "yellow";
+
+    });
     
     taskDescription.textContent = generalMethods().capitalizeFirst(task[1]);
 
@@ -264,7 +290,7 @@ function renderTaskContent(task){
         if(projects[currentIndex].checkList[index][0] === false){   
         dataManagement().deleteTask(currentIndex, index);
         dataManagement().updateStorage();
-        renderTasks();
+        taskList.removeChild(taskDelete.parentElement.parentElement);
         };
 
     });
@@ -339,7 +365,7 @@ addTaskButton.addEventListener('click', ()=>{
         e.preventDefault();
 
         const taskData = new FormData(newTaskForm);
-        projects[currentIndex].checkList.push([false, taskData.get('todo')]);
+        projects[currentIndex].checkList.push([false, taskData.get('todo'), taskData.get('priority')]);
 
         dataManagement().updateStorage();
         renderTasks();
