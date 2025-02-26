@@ -318,7 +318,8 @@ main{
 
   padding: 2rem;
 
-  border: 5px double var(--prussian);
+  /* border: 5px double var(--prussian); */
+
   border-radius: 15px;
 
   background-color: var(--sage);
@@ -326,6 +327,7 @@ main{
   /* max-width: 600px; */
   /* min-width: 400px; */
   
+  box-shadow: inset var(--pearl) 3px 3px 6px 1px, inset var(--prussian) -2px -2px 6px 0px;
 
 }
 
@@ -382,13 +384,18 @@ main{
 
   border-radius: 15px;
   padding: 0.5rem 2rem;
+
+  border:none;
+  outline: none;
 }
 
 .new-project button:nth-child(1){
   background-color: var(--steel);
+  box-shadow: inset var(--pearl) 3px 3px 6px 1px, inset var(--prussian) -2px -2px 6px 0px;
 }
 .new-project button:nth-child(2){
   background-color: var(--sage);
+  box-shadow: inset var(--pearl) 3px 3px 6px 1px, inset var(--prussian) -2px -2px 6px 0px;
 }
 
 .projectContent{
@@ -643,7 +650,7 @@ main{
 
 .projectContent .taskList > form > div:nth-child(2){
   display: flex;
-  gap: 15px;
+  gap: 25px;
   padding: 5px 20px;
 
   /* margin-bottom: 3rem; */
@@ -658,8 +665,21 @@ main{
   border-radius: 50%;
   border-color: transparent;
   background-color: transparent;
+
+  cursor: pointer;
+  
   
 }
+.projectContent .taskList > form button:nth-child(1) {
+  
+/* box-shadow:  0 0 11px 5px var(--sage), var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px; */
+/* background-color: var(--pr); */
+}
+.projectContent .taskList > form button:nth-child(2) {
+  /* box-shadow:  0 0 11px 5px var(--sage), var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px; */
+}
+
+
 
 .projectContent .taskList > form button svg{
   height: 50px;
@@ -671,12 +691,9 @@ main{
 }
 .projectContent .taskList > form button:nth-child(2) > svg{
   color: var(--pearl);
+  
 }
-.projectContent .taskList > form svg:hover{
-  transform: scale(1.2);
-  cursor: pointer;
 
-}
 
 .priorityRadio{
   display: flex;
@@ -715,18 +732,15 @@ main{
 .priorityRadio > div:nth-child(2){
 
   box-shadow:  0 0 11px 5px yellow, var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px;;
-  /* box-shadow:  var(--pearl) 3px 3px 6px 5px,  var(--prussian) -2px -2px 6px 8px; */
   accent-color: rgb(240, 240, 127);
 }
 
 .priorityRadio div:nth-child(3){
   box-shadow:  0 0 11px 5px orange, var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px;
-  /* box-shadow:  var(--pearl) 3px 3px 6px 5px,  var(--prussian) -2px -2px 6px 8px; */
   accent-color: #f0c982;
 }
 .priorityRadio div:nth-child(4){
   box-shadow:  0 0 11px 5px red ,var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px;
-  /* box-shadow:  var(--pearl) 3px 3px 6px 5px,  var(--prussian) -2px -2px 6px 8px; */
   accent-color: rgb(243, 112, 112);
   
 }
