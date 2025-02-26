@@ -667,7 +667,7 @@ main{
 }
 
 .projectContent .taskList > form button:nth-child(1) > svg{
-  color: var(--steel);
+  color: var(--prussian);
 }
 .projectContent .taskList > form button:nth-child(2) > svg{
   color: var(--pearl);

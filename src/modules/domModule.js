@@ -180,7 +180,7 @@ function renderOneTask(task){
 
 function renderTaskContent(task){
 
-    const taskRTC = task;
+    // const taskRTC = task;
     const statusDescriptionWrapper = document.createElement('div');
     const taskStatus = document.createElement('div');
     const taskDescription = document.createElement('p');
@@ -190,34 +190,60 @@ function renderTaskContent(task){
     const taskDelete = document.createElement('div');
 
     taskStatus.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>';
-    taskStatus.style.color = (taskRTC[2] == 1)? "yellow": (taskRTC[2] == 2)? "orange" : "red";
+    taskStatus.style.color = (task[2] == 1)? "yellow": (task[2] == 2)? "orange" : "red";
     taskStatus.addEventListener('click', (e)=>{
-
+        
         e.stopPropagation();
         const index = generalMethods().getIndexInParent(taskStatus.parentElement.parentElement);
-        // if(projects[currentIndex].checkList[index][0] === false){
-        switch(taskRTC[2]){
+        if(projects[currentIndex].checkList[index][0] === false){
+        
+        // if(taskRTC[2] == 1){
+        //     taskRTC[2] = 2;
+        //         projects[currentIndex].checkList[index][2] = 2;
+        //         taskStatus.style.color = "orange";
+        //         console.log('1');
+        // }else if (taskRTC[2] == 2){
+        //     taskRTC[2] = 3;
+        //         projects[currentIndex].checkList[index][2] = 3;
+        //         taskStatus.style.color = "red";
+        //         console.log('2');
+        // }else{
+        //     taskRTC[2] = 1;
+        //         projects[currentIndex].checkList[index][2] = 1;
+        //         taskStatus.style.color = "yellow";
+        //         console.log('3');
+
+        // };
+
+
+        switch(task[2]){
             case 1:
-                taskRTC[2] = 2;
+                // taskRTC[2] = 2;
                 projects[currentIndex].checkList[index][2] = 2;
                 taskStatus.style.color = "orange";
+                console.log('1');
             break;
 
             case 2:
-                taskRTC[2] = 3;
+                // taskRTC[2] = 3;
                 projects[currentIndex].checkList[index][2] = 3;
                 taskStatus.style.color = "red";
+                console.log('2');
             break;
 
             case 3:
-                taskRTC[2] = 1;
+                // taskRTC[2] = 1;
                 projects[currentIndex].checkList[index][2] = 1;
                 taskStatus.style.color = "yellow";
+                console.log('3');
             break;
         };
-    
+    dataManagement().updateStorage();
 
-    });
+        };
+
+    }
+);
     
     taskDescription.textContent = generalMethods().capitalizeFirst(task[1]);
 
@@ -251,7 +277,6 @@ function renderTaskContent(task){
 
             
 
-            // renderTasks();
 
             dataManagement().updateStorage();
         });
@@ -259,8 +284,7 @@ function renderTaskContent(task){
         taskEditButtonCancel.addEventListener('click', (e)=>{
             e.preventDefault();
             e.stopPropagation();
-            // taskList.removeChild(e.currentTarget.parentElement.parentElement);
-            // renderTasks();
+            
             const parent = e.currentTarget.parentElement.parentElement;
             generalMethods().clearElementChildren(parent);
             parent.appendChild(renderTaskContent(taskRTC).statusDescriptionWrapper);
@@ -365,7 +389,7 @@ addTaskButton.addEventListener('click', ()=>{
         e.preventDefault();
 
         const taskData = new FormData(newTaskForm);
-        projects[currentIndex].checkList.push([false, taskData.get('todo'), taskData.get('priority')]);
+        projects[currentIndex].checkList.push([false, taskData.get('todo'), Number(taskData.get('priority'))]);
 
         dataManagement().updateStorage();
         renderTasks();
