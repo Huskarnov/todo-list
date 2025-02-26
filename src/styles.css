@@ -76,6 +76,7 @@ button:active{
   transform: scale(0.98);
 }
 Dialog{
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); 
@@ -516,19 +517,31 @@ main{
 
 }
 
-.taskList p{
-  width: 450px;
+.taskList > div > div p:nth-child(2){
+  width: 370px;
   text-wrap: wrap;
+}
+.taskList > div > div p:nth-child(3){
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+
+  /* justify-self: end; */
+  /* width: 400px; */
+  text-wrap: nowrap;
+  /* padding: 0 0.5px; */
 
 }
-
 
 .taskList > div > div{
   display: flex;
   gap: 5px;
 }
 .taskList > div > div:nth-child(1){
-  width: 100%;
+  width: 85%;
 }
 
 .taskList > div > div:nth-child(1) >div:nth-child(1){
@@ -544,7 +557,8 @@ main{
 }
 
 .taskList > div > div:nth-child(2){
-  width: 100px;
+  width: 80px;
+
 }
 .taskList > div > div:nth-child(2) div:nth-child(1){
   color: var(--prussian);
@@ -554,7 +568,6 @@ main{
 .taskList > div > div:nth-child(2) div:nth-child(2){
   color: var(--delete);
 
-  margin-right: 10px;
   transition: all 0.1s ease-in;
 
 }
@@ -670,14 +683,14 @@ main{
   
   
 }
-.projectContent .taskList > form button:nth-child(1) {
+/* .projectContent .taskList > form button:nth-child(1) {
   
-/* box-shadow:  0 0 11px 5px var(--sage), var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px; */
-/* background-color: var(--pr); */
+box-shadow:  0 0 11px 5px var(--sage), var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px;
+background-color: var(--pr);
 }
 .projectContent .taskList > form button:nth-child(2) {
-  /* box-shadow:  0 0 11px 5px var(--sage), var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px; */
-}
+  box-shadow:  0 0 11px 5px var(--sage), var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px;
+} */
 
 
 
@@ -732,16 +745,13 @@ main{
 .priorityRadio > div:nth-child(2){
 
   box-shadow:  0 0 11px 5px yellow, var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px;;
-  accent-color: rgb(240, 240, 127);
 }
 
 .priorityRadio div:nth-child(3){
   box-shadow:  0 0 11px 5px orange, var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px;
-  accent-color: #f0c982;
 }
 .priorityRadio div:nth-child(4){
   box-shadow:  0 0 11px 5px red ,var(--prussian) 3px 3px 6px 5px,  var(--pearl) -2px -2px 6px 8px;
-  accent-color: rgb(243, 112, 112);
   
 }
 

@@ -184,6 +184,7 @@ function renderTaskContent(task){
     const statusDescriptionWrapper = document.createElement('div');
     const taskStatus = document.createElement('div');
     const taskDescription = document.createElement('p');
+    const taskRemainingTime = document.createElement('p');
 
     const editDeleteWrapper = document.createElement('div');
     const taskEdit = document.createElement('div');
@@ -196,25 +197,6 @@ function renderTaskContent(task){
         e.stopPropagation();
         const index = generalMethods().getIndexInParent(taskStatus.parentElement.parentElement);
         if(projects[currentIndex].checkList[index][0] === false){
-        
-        // if(taskRTC[2] == 1){
-        //     taskRTC[2] = 2;
-        //         projects[currentIndex].checkList[index][2] = 2;
-        //         taskStatus.style.color = "orange";
-        //         console.log('1');
-        // }else if (taskRTC[2] == 2){
-        //     taskRTC[2] = 3;
-        //         projects[currentIndex].checkList[index][2] = 3;
-        //         taskStatus.style.color = "red";
-        //         console.log('2');
-        // }else{
-        //     taskRTC[2] = 1;
-        //         projects[currentIndex].checkList[index][2] = 1;
-        //         taskStatus.style.color = "yellow";
-        //         console.log('3');
-
-        // };
-
 
         switch(task[2]){
             case 1:
@@ -246,6 +228,20 @@ function renderTaskContent(task){
 );
     
     taskDescription.textContent = generalMethods().capitalizeFirst(task[1]);
+
+    taskRemainingTime.textContent = '365 D';
+
+    const timeSubstraction = (task[3] - ((new Date()).getTime()));
+
+    if (timeSubstraction <= 0){
+        taskRemainingTime.textContent = 'Expired';
+    }
+
+    // console.log(task[4]);
+    // console.log((new Date()).getTime());  
+    // console.log((new Date(taskData.get('taskDate'))).getTime());  
+    // console.log(new Date(taskData.get('taskDate')) - new Date());  
+    
 
     taskEdit.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-2.3 6.35c.22-.21.22-.56 0-.77L15.42 7.3a.53.53 0 0 0-.77 0l-1 1l2.05 2.05zM7 14.94V17h2.06l6.06-6.06l-2.06-2.06z"/></svg>';
     taskEdit.addEventListener('click', (e)=>{
@@ -319,8 +315,7 @@ function renderTaskContent(task){
 
     });
     
-    statusDescriptionWrapper.appendChild(taskStatus);
-    statusDescriptionWrapper.appendChild(taskDescription);
+    statusDescriptionWrapper.append(taskStatus, taskDescription, taskRemainingTime);
 
 
     editDeleteWrapper.appendChild(taskEdit);
@@ -359,9 +354,11 @@ addTaskButton.addEventListener('click', ()=>{
     newTaskInput.required = 'true';
     newTaskInput.placeholder = 'Description';
 
-    newTaskInputDate.type = 'date';
+    newTaskInputDate.type = 'datetime-local';
     newTaskInputDate.name = 'taskDate';
+    // newTaskInputDate.min = JSON.stringify(new Date());
     newTaskInputDate.required = 'true';
+    
 
     newTaskRadioTitle.textContent = "Priority";
     Object.assign(newTaskInputRadioLow, {type:"radio", id:"low", name:"priority", value: 1});
@@ -391,9 +388,10 @@ addTaskButton.addEventListener('click', ()=>{
         e.preventDefault();
 
         const taskData = new FormData(newTaskForm);
-        projects[currentIndex].checkList.push([false, taskData.get('todo'), Number(taskData.get('priority')), new Date(taskData.get('taskDate'))]);
+        projects[currentIndex].checkList.push([false, taskData.get('todo'), Number(taskData.get('priority')), (new Date(taskData.get('taskDate'))).getTime()]);
 
-        console.log((new Date() - new Date(taskData.get('taskDate'))) / (1000 * 3600 * 24));  
+        
+
 
         dataManagement().updateStorage();
         renderTasks();
@@ -451,5 +449,9 @@ function generalMethods(){
         }else{taskWrapper.style.opacity = '1';};
     };
 
-    return {capitalizeFirst, getIndexInParent, clearElementChildren, toggleTaskwrapper};
+    const getRemainingTime = function(date){
+        
+    };
+
+    return {capitalizeFirst, getIndexInParent, clearElementChildren, toggleTaskwrapper, getRemainingTime};
 }
