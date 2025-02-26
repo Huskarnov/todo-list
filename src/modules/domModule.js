@@ -272,8 +272,8 @@ function renderTaskContent(task){
             projects[currentIndex].checkList[index][1] = taskEditInput.value;
 
             generalMethods().clearElementChildren(parent);
-            parent.appendChild(renderTaskContent(taskRTC).statusDescriptionWrapper);
-            parent.appendChild(renderTaskContent(taskRTC).editDeleteWrapper);
+            parent.appendChild(renderTaskContent(task).statusDescriptionWrapper);
+            parent.appendChild(renderTaskContent(task).editDeleteWrapper);
 
             
 
@@ -287,8 +287,8 @@ function renderTaskContent(task){
             
             const parent = e.currentTarget.parentElement.parentElement;
             generalMethods().clearElementChildren(parent);
-            parent.appendChild(renderTaskContent(taskRTC).statusDescriptionWrapper);
-            parent.appendChild(renderTaskContent(taskRTC).editDeleteWrapper);
+            parent.appendChild(renderTaskContent(task).statusDescriptionWrapper);
+            parent.appendChild(renderTaskContent(task).editDeleteWrapper);
             
         });
 
