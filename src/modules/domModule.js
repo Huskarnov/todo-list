@@ -153,7 +153,8 @@ function renderTasks(){
 
 function renderOneTask(task){
     
-    const actualTask = task;
+    // const actualTask = task;
+    // const index = 
     const taskWrapper = document.createElement('div');
     const statusDescriptionWrapper = renderTaskContent(task).statusDescriptionWrapper;
     const editDeleteWrapper = renderTaskContent(task).editDeleteWrapper;
@@ -166,14 +167,15 @@ function renderOneTask(task){
             if(e.currentTarget.children.length === 2){
             const tIndex = generalMethods().getIndexInParent(e.currentTarget);
 
-            generalMethods().toggleTaskwrapper(taskWrapper, currentIndex, tIndex, actualTask);
+            generalMethods().toggleTaskwrapper(taskWrapper, currentIndex, tIndex, task);
         };
         
     }
 );
-    if(task[0] === true){
+    if(task[0] === true || (( task[3] - ((new Date()).getTime()) ) < 1000) ){
         taskWrapper.style.opacity = '0.3';
     };
+    
 
     return taskWrapper;
 };
@@ -229,13 +231,19 @@ function renderTaskContent(task){
     
     taskDescription.textContent = generalMethods().capitalizeFirst(task[1]);
 
-    taskRemainingTime.textContent = '365 D';
+    taskRemainingTime.textContent = generalMethods().getRemainingTime(task[3]);
 
-    const timeSubstraction = (task[3] - ((new Date()).getTime()));
+    // const timeSubstraction = (task[3] - ((new Date()).getTime()));
 
-    if (timeSubstraction <= 0){
-        taskRemainingTime.textContent = 'Expired';
-    }
+    // if (timeSubstraction <= 0){
+    //     taskRemainingTime.textContent = 'Expired';
+    // } else if(((timeSubstraction)/(1000*3600)) >= 24){
+    //     taskRemainingTime.textContent = `${Math.round((timeSubstraction)/(1000*3600*24))} D`;
+    // }else if(((timeSubstraction)/(1000*3600)) >= 1){
+    //     taskRemainingTime.textContent = `${Math.round((timeSubstraction)/(1000*3600))} H`;
+    // }else if(((timeSubstraction)/(1000)) < 3600){
+    //     taskRemainingTime.textContent = `${Math.round((timeSubstraction)/(1000 * 60))} Min`;
+    // };
 
     // console.log(task[4]);
     // console.log((new Date()).getTime());  
@@ -429,7 +437,11 @@ function generalMethods(){
     };
 
     const  capitalizeFirst = function(string){
-        return String(string).charAt(0).toUpperCase() + (string).slice(1);
+        if((String(string).charAt(0)).match(/[a-z]/i)){
+        return String(string).charAt(0).toUpperCase() + String(string).slice(1);
+        }else{
+            return String(string);
+        };
     };
 
     const clearElementChildren = function(element){
@@ -440,16 +452,30 @@ function generalMethods(){
         };
     };
 
-    const toggleTaskwrapper= function(taskWrapper, currentIndex, tIndex, actualTask){
+    const toggleTaskwrapper= function(taskWrapper, currentIndex, tIndex, task){
         dataManagement().toggleTask(currentIndex, tIndex);
         dataManagement().updateStorage();
         // clearElementChildren(taskWrapper);
-        if(actualTask[0] === true){
+        if(task[0] === true){
             taskWrapper.style.opacity = '0.3';
         }else{taskWrapper.style.opacity = '1';};
     };
 
     const getRemainingTime = function(date){
+
+        const timeSubstraction = (date - ((new Date()).getTime()));
+
+    if (((timeSubstraction)/(1000)) < 1){
+        return 'Expired';
+    } else if(((timeSubstraction)/(1000*3600)) >= 24){
+        return `${Math.round((timeSubstraction)/(1000*3600*24))} Days`;
+    }else if(((timeSubstraction)/(1000*3600)) >= 1){
+        return `${Math.round((timeSubstraction)/(1000*3600))} Hrs`;
+    }else if(((timeSubstraction)/(1000)) > 60){
+        return `${Math.round((timeSubstraction)/(1000 * 60))} Min`;
+    }else if(((timeSubstraction)/(1000)) > 1){
+        return `${Math.round((timeSubstraction)/(1000))} Sec`;
+    };
         
     };
 

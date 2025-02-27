@@ -527,7 +527,7 @@ main{
   justify-content: center;
   align-items: center;
 
-  color: white;
+  color: var(--prussian);
 
   /* justify-self: end; */
   /* width: 400px; */
