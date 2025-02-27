@@ -144,20 +144,18 @@ function renderTasks(){
 
     generalMethods().clearElementChildren(taskList);
 
-    projects[currentIndex].checkList.forEach(task => {
+    projects[currentIndex].checkList.forEach((task, index) => {
         
-        taskList.appendChild(renderOneTask(task));
+        taskList.appendChild(renderOneTask(task, index));
 
     });
 };
 
-function renderOneTask(task){
+function renderOneTask(task, index){
     
-    // const actualTask = task;
-    // const index = 
     const taskWrapper = document.createElement('div');
-    const statusDescriptionWrapper = renderTaskContent(task).statusDescriptionWrapper;
-    const editDeleteWrapper = renderTaskContent(task).editDeleteWrapper;
+    const statusDescriptionWrapper = renderTaskContent(task, index).statusDescriptionWrapper;
+    const editDeleteWrapper = renderTaskContent(task, index).editDeleteWrapper;
 
     taskWrapper.appendChild(statusDescriptionWrapper);
     taskWrapper.appendChild(editDeleteWrapper);
@@ -165,14 +163,19 @@ function renderOneTask(task){
         // e.stopPropagation(); !(e.target.nodeName === "svg") && !(e.target.nodeName === "path") && !(e.target.nodeName === "BUTTON") && !(e.target.nodeName === "INPUT")
             // e.stopPropagation();
             if(e.currentTarget.children.length === 2){
-            const tIndex = generalMethods().getIndexInParent(e.currentTarget);
+            // const tIndex = generalMethods().getIndexInParent(e.currentTarget);
 
-            generalMethods().toggleTaskwrapper(taskWrapper, currentIndex, tIndex, task);
+            generalMethods().toggleTaskwrapper(taskWrapper, currentIndex, index, task);
         };
         
     }
 );
-    if(task[0] === true || (( task[3] - ((new Date()).getTime()) ) < 1000) ){
+
+    if((( task[3] - ((new Date()).getTime()) ) < 1000)){
+        projects[currentIndex].checkList[index][0] = true;
+        dataManagement().updateStorage();
+    };
+    if(projects[currentIndex].checkList[index][0] === true ){
         taskWrapper.style.opacity = '0.3';
     };
     
@@ -180,7 +183,7 @@ function renderOneTask(task){
     return taskWrapper;
 };
 
-function renderTaskContent(task){
+function renderTaskContent(task, index){
 
     // const taskRTC = task;
     const statusDescriptionWrapper = document.createElement('div');
@@ -197,7 +200,7 @@ function renderTaskContent(task){
     taskStatus.addEventListener('click', (e)=>{
         
         e.stopPropagation();
-        const index = generalMethods().getIndexInParent(taskStatus.parentElement.parentElement);
+        // const index = generalMethods().getIndexInParent(taskStatus.parentElement.parentElement);
         if(projects[currentIndex].checkList[index][0] === false){
 
         switch(task[2]){
@@ -222,12 +225,12 @@ function renderTaskContent(task){
                 console.log('3');
             break;
         };
-    dataManagement().updateStorage();
+            dataManagement().updateStorage();
 
-        };
+                };
 
-    }
-);
+            }
+        );
     
     taskDescription.textContent = generalMethods().capitalizeFirst(task[1]);
 
@@ -256,7 +259,7 @@ function renderTaskContent(task){
         
         e.stopPropagation();
         const currentTask = e.currentTarget.parentElement.parentElement;
-        const index = generalMethods().getIndexInParent(currentTask);
+        // const index = generalMethods().getIndexInParent(currentTask);
         
         if(projects[currentIndex].checkList[index][0] === false){   
 
@@ -270,29 +273,32 @@ function renderTaskContent(task){
         taskEditButtonCancel.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33 " viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m3.59 5L12 10.59L8.41 7L7 8.41L10.59 12L7 15.59L8.41 17L12 13.41L15.59 17L17 15.59L13.41 12L17 8.41z"/></svg>';    
         
         taskEditButtonSubmit.addEventListener('click', (e)=>{
-            const parent = e.currentTarget.parentElement.parentElement;
+            // const parent = e.currentTarget.parentElement.parentElement;
             e.preventDefault();
             e.stopPropagation();
             projects[currentIndex].checkList[index][1] = taskEditInput.value;
 
-            generalMethods().clearElementChildren(parent);
-            parent.appendChild(renderTaskContent(task).statusDescriptionWrapper);
-            parent.appendChild(renderTaskContent(task).editDeleteWrapper);
+            // generalMethods().clearElementChildren(parent);
+            // parent.appendChild(renderTaskContent(task).statusDescriptionWrapper);
+            // parent.appendChild(renderTaskContent(task).editDeleteWrapper);
 
             
 
 
             dataManagement().updateStorage();
+            renderTasks();
         });
 
         taskEditButtonCancel.addEventListener('click', (e)=>{
             e.preventDefault();
             e.stopPropagation();
             
-            const parent = e.currentTarget.parentElement.parentElement;
-            generalMethods().clearElementChildren(parent);
-            parent.appendChild(renderTaskContent(task).statusDescriptionWrapper);
-            parent.appendChild(renderTaskContent(task).editDeleteWrapper);
+            // const parent = e.currentTarget.parentElement.parentElement;
+            // generalMethods().clearElementChildren(parent);
+            // parent.appendChild(renderTaskContent(task).statusDescriptionWrapper);
+            // parent.appendChild(renderTaskContent(task).editDeleteWrapper);
+
+            renderTasks();
             
         });
 
@@ -305,21 +311,22 @@ function renderTaskContent(task){
         currentTask.appendChild(taskEditForm);
 
 
-        };
-    }
-); 
+                };
+            }
+        ); 
 
 
     taskDelete.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></svg>';
     taskDelete.addEventListener('click', (e)=>{
         e.stopPropagation();
-        const index = generalMethods().getIndexInParent(e.currentTarget.parentElement.parentElement);
+        // const index = generalMethods().getIndexInParent(e.currentTarget.parentElement.parentElement);
 
-        if(projects[currentIndex].checkList[index][0] === false){   
+        // if(projects[currentIndex].checkList[index][0] === false){   
         dataManagement().deleteTask(currentIndex, index);
         dataManagement().updateStorage();
-        taskList.removeChild(taskDelete.parentElement.parentElement);
-        };
+        // taskList.removeChild(taskDelete.parentElement.parentElement);
+        renderTasks();
+        // };
 
     });
     
@@ -452,8 +459,8 @@ function generalMethods(){
         };
     };
 
-    const toggleTaskwrapper= function(taskWrapper, currentIndex, tIndex, task){
-        dataManagement().toggleTask(currentIndex, tIndex);
+    const toggleTaskwrapper= function(taskWrapper, currentIndex, index, task){
+        dataManagement().toggleTask(currentIndex, index);
         dataManagement().updateStorage();
         // clearElementChildren(taskWrapper);
         if(task[0] === true){
