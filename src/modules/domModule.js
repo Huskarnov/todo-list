@@ -123,22 +123,21 @@ allTasksAllProjectsButton.addEventListener('click', ()=>{
 
     generalMethods().clearElementChildren(allTasksList);
 
-    regroupTasks();
-
-
-
+    appendItemsInElement(regroupTasks(), allTasksList);
+    //currentTask index needed
     allTasksList.style.display = 'flex';
     }
 );
 
 function regroupTasks(){
-    const allTasksArray = projects.reduce((accumulator, project) => { 
-        project.checkList.forEach(task => accumulator.push(task)) 
-
-        return accumulator}
+    const allTasksArray = projects.reduce((accumulator, project) => 
+        
+        accumulator.concat(project.checkList)
+    
     ,[]);
     
     allTasksArray.sort((a,b) => a[3] - b[3]);
+
     console.log(allTasksArray);
 
     return allTasksArray;
@@ -173,14 +172,8 @@ function renderTasks(){
 
     generalMethods().clearElementChildren(taskList);
 
-
     appendItemsInElement(projects[currentIndex].checkList, taskList);
 
-    // projects[currentIndex].checkList.forEach((task, index) => {
-        
-    //     taskList.appendChild(renderOneTask(task, index));
-
-    // });
 };
 
 function appendItemsInElement(array, element){
