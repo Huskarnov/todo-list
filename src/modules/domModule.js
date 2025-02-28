@@ -3,13 +3,13 @@ import { projects, dataManagement} from './dataModule';
 export {cardManagement};
 
 const cardGrid = document.querySelector('.card-grid');
-const projectPage = document.querySelector('.projectContent');
 const taskList = document.querySelector('.taskList');
 let currentIndex;
 //--------------------------------------------------------------------------------
 //Card management
 
 function cardManagement(){
+
 const createCard = function(project){
     let card = document.createElement('div');
     card.classList.add('card');
@@ -68,7 +68,7 @@ return {createCard, renderCards}
 //--------------------------------------------------------------------------------
 //New project 
 
-const newProjectButton = document.querySelector('header button');
+const newProjectButton = document.querySelector('header button:nth-child(1)');
 const newProjectDialog = document.querySelector('#dialog-form');
 const projectForm = document.querySelector('.new-project');
 const cancelProjectButton = document.querySelector('#new-project-cancel');
@@ -105,8 +105,6 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
 
     });
 
-
-
     //close new project form
     cancelProjectButton.addEventListener('click', (e)=>{
         e.preventDefault();
@@ -114,7 +112,38 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
         projectForm.reset();
     });
 
+
+
 //--------------------------------------------------------------------------------
+//All tasks
+const allTasksAllProjectsButton = document.querySelector('header button:nth-child(2)');
+const allTasksList = document.querySelector('.all-taskList');
+
+allTasksAllProjectsButton.addEventListener('click', ()=>{
+
+    generalMethods().clearElementChildren(allTasksList);
+
+    regroupTasks();
+
+
+
+    allTasksList.style.display = 'flex';
+    }
+);
+
+function regroupTasks(){
+    const allTasksArray = projects.reduce((accumulator, project) => { 
+        project.checkList.forEach(task => accumulator.push(task)) 
+
+        return accumulator}
+    ,[]);
+    
+    allTasksArray.sort((a,b) => a[3] - b[3]);
+    console.log(allTasksArray);
+
+    return allTasksArray;
+};
+//---------------------------------------------------------------------------------------
 //Project details
 
     const projectDialog = document.querySelector('#projectDialog');
@@ -144,11 +173,24 @@ function renderTasks(){
 
     generalMethods().clearElementChildren(taskList);
 
-    projects[currentIndex].checkList.forEach((task, index) => {
+
+    appendItemsInElement(projects[currentIndex].checkList, taskList);
+
+    // projects[currentIndex].checkList.forEach((task, index) => {
         
-        taskList.appendChild(renderOneTask(task, index));
+    //     taskList.appendChild(renderOneTask(task, index));
+
+    // });
+};
+
+function appendItemsInElement(array, element){
+
+    array.forEach((task, index) => {
+        
+        element.appendChild(renderOneTask(task, index));
 
     });
+
 };
 
 function renderOneTask(task, index){
@@ -405,6 +447,7 @@ addTaskButton.addEventListener('click', ()=>{
         const taskData = new FormData(newTaskForm);
         projects[currentIndex].checkList.push([false, taskData.get('todo'), Number(taskData.get('priority')), (new Date(taskData.get('taskDate'))).getTime()]);
 
+        projects[currentIndex].checkList = projects[currentIndex].checkList.sort((a, b) => a[3]-b[3]);
         
 
 
