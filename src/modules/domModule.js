@@ -140,6 +140,11 @@ allTasksAllProjectsButton.addEventListener('click', ()=>{
     }
 );
 
+function renderCumulatedTasks(){
+    generalMethods().clearElementChildren(allTasksList);
+    appendItemsInElement(regroupTasks(), allTasksList);
+};
+
 function regroupTasks(){
     const allTasksArray = projects.reduce((accumulator, project) => 
         
@@ -235,9 +240,8 @@ function renderOneTask(task){
     // taskWrapper.style.opacity = '1';
 
     if((( task[3] - ((new Date()).getTime()) ) < 1000)){
-        // projects[projectIndex].checkList[index][0] = true;
-        // console.log(projectIndex);   
-        // dataManagement().updateStorage();
+        projects[projectIndex].checkList[index][0] = true;
+        dataManagement().updateStorage();
     };
 
     if(task[0] === true ){
@@ -350,7 +354,15 @@ function renderTaskContent(task, projectIndex, index){
 
 
             dataManagement().updateStorage();
-            renderTasks();
+
+            if (cardGrid.style.display !== 'none'){
+                renderTasks();
+            }else{
+                renderCumulatedTasks();
+            };
+            
+
+            
         });
 
         taskEditButtonCancel.addEventListener('click', (e)=>{
@@ -362,7 +374,11 @@ function renderTaskContent(task, projectIndex, index){
             // parent.appendChild(renderTaskContent(task).statusDescriptionWrapper);
             // parent.appendChild(renderTaskContent(task).editDeleteWrapper);
 
-            renderTasks();
+            if (cardGrid.style.display !== 'none'){
+                renderTasks();
+            }else{
+                renderCumulatedTasks();
+            };
             
         });
 
@@ -389,7 +405,12 @@ function renderTaskContent(task, projectIndex, index){
         dataManagement().deleteTask(projectIndex, index);
         dataManagement().updateStorage();
         // taskList.removeChild(taskDelete.parentElement.parentElement);
-        renderTasks();
+        
+        if (cardGrid.style.display !== 'none'){
+            renderTasks();
+        }else{
+            renderCumulatedTasks();
+        };
         // };
 
     });
