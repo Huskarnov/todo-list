@@ -46,8 +46,8 @@ function fillProjectsFromLocalStorage(){
 function updateStorage(){
     const projectsString = JSON.stringify(projects);
     localStorage.setItem("projects", projectsString);
-    console.log("storage updated");
-    console.log(localStorage.getItem("projects"));
+    // console.log("storage updated");
+    // console.log(localStorage.getItem("projects"));
 };
 
 const addProject = function(project){
@@ -60,7 +60,7 @@ const deleteProject = function(index){
 
 const deleteTask = function(pIndex, tIndex){
     projects[pIndex].checkList.splice(tIndex, 1);
-    console.log('deleting');
+    // console.log('deleting');
 };
 
 const toggleTask = function(pIndex, tIndex){

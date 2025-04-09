@@ -117,7 +117,9 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
 //--------------------------------------------------------------------------------
 //All tasks
 const allTasksAllProjectsButton = document.querySelector('header button:nth-child(2)');
+// const allTasksButton = document.querySelector('.all-tasks');
 const allTasksList = document.querySelector('.all-taskList');
+allTasksList.classList.add('taskList');
 
 allTasksAllProjectsButton.addEventListener('click', ()=>{
 
@@ -125,7 +127,16 @@ allTasksAllProjectsButton.addEventListener('click', ()=>{
 
     appendItemsInElement(regroupTasks(), allTasksList);
     //currentTask index needed
-    allTasksList.style.display = 'flex';
+
+        if((cardGrid.style.display !== 'none')){
+            allTasksAllProjectsButton.innerHTML = 'All <br>Projects';
+            allTasksList.style.display = 'flex';
+            cardGrid.style.display = 'none';
+        }else{
+            allTasksAllProjectsButton.innerHTML = 'All <br>Tasks';
+            allTasksList.style.display = 'none';
+            cardGrid.style.display = 'grid';
+        }
     }
 );
 
@@ -138,7 +149,7 @@ function regroupTasks(){
     
     allTasksArray.sort((a,b) => a[3] - b[3]);
 
-    console.log(allTasksArray);
+    // console.log(allTasksArray);
 
     return allTasksArray;
 };
@@ -160,10 +171,13 @@ const showProjectDetails = function(event){
 
     generalMethods().clearElementChildren(taskList);
     renderTasks();
+    taskList.style.display = 'flex';
     
     // console.log(projects[cardIndex].checkList[0][0]);
 
     projectDialog.showModal();
+
+    // cardGrid.style.display = 'grid';
 };
 
 
@@ -178,19 +192,31 @@ function renderTasks(){
 
 function appendItemsInElement(array, element){
 
-    array.forEach((task, index) => {
+    array.forEach((task) => {
         
-        element.appendChild(renderOneTask(task, index));
+        element.appendChild(renderOneTask(task));
 
     });
 
 };
 
-function renderOneTask(task, index){
+function renderOneTask(task){
     
+    let projectIndex;
+
+    for(let i = 0; i <= (projects.length -1); i ++){
+        if(projects[i].checkList.includes(task)){
+            projectIndex = i;
+        }
+    };
+
+    let index = projects[projectIndex].checkList.indexOf(task);
+    console.log(index);
+
+
     const taskWrapper = document.createElement('div');
-    const statusDescriptionWrapper = renderTaskContent(task, index).statusDescriptionWrapper;
-    const editDeleteWrapper = renderTaskContent(task, index).editDeleteWrapper;
+    const statusDescriptionWrapper = renderTaskContent(task, projectIndex, index).statusDescriptionWrapper;
+    const editDeleteWrapper = renderTaskContent(task, projectIndex, index).editDeleteWrapper;
 
     taskWrapper.appendChild(statusDescriptionWrapper);
     taskWrapper.appendChild(editDeleteWrapper);
@@ -200,25 +226,28 @@ function renderOneTask(task, index){
             if(e.currentTarget.children.length === 2){
             // const tIndex = generalMethods().getIndexInParent(e.currentTarget);
 
-            generalMethods().toggleTaskwrapper(taskWrapper, currentIndex, index, task);
+            generalMethods().toggleTaskwrapper(taskWrapper, projectIndex, index, task);
         };
         
     }
 );
 
+    // taskWrapper.style.opacity = '1';
+
     if((( task[3] - ((new Date()).getTime()) ) < 1000)){
-        projects[currentIndex].checkList[index][0] = true;
-        dataManagement().updateStorage();
+        // projects[projectIndex].checkList[index][0] = true;
+        // console.log(projectIndex);   
+        // dataManagement().updateStorage();
     };
-    if(projects[currentIndex].checkList[index][0] === true ){
+
+    if(task[0] === true ){
         taskWrapper.style.opacity = '0.3';
     };
-    
 
     return taskWrapper;
 };
 
-function renderTaskContent(task, index){
+function renderTaskContent(task, projectIndex, index){
 
     // const taskRTC = task;
     const statusDescriptionWrapper = document.createElement('div');
@@ -236,26 +265,26 @@ function renderTaskContent(task, index){
         
         e.stopPropagation();
         // const index = generalMethods().getIndexInParent(taskStatus.parentElement.parentElement);
-        if(projects[currentIndex].checkList[index][0] === false){
+        if(projects[projectIndex].checkList[index][0] === false){
 
         switch(task[2]){
             case 1:
                 // taskRTC[2] = 2;
-                projects[currentIndex].checkList[index][2] = 2;
+                projects[projectIndex].checkList[index][2] = 2;
                 taskStatus.style.color = "orange";
                 console.log('1');
             break;
 
             case 2:
                 // taskRTC[2] = 3;
-                projects[currentIndex].checkList[index][2] = 3;
+                projects[projectIndex].checkList[index][2] = 3;
                 taskStatus.style.color = "red";
                 console.log('2');
             break;
 
             case 3:
                 // taskRTC[2] = 1;
-                projects[currentIndex].checkList[index][2] = 1;
+                projects[projectIndex].checkList[index][2] = 1;
                 taskStatus.style.color = "yellow";
                 console.log('3');
             break;
@@ -296,14 +325,14 @@ function renderTaskContent(task, index){
         const currentTask = e.currentTarget.parentElement.parentElement;
         // const index = generalMethods().getIndexInParent(currentTask);
         
-        if(projects[currentIndex].checkList[index][0] === false){   
+        if(projects[projectIndex].checkList[index][0] === false){   
 
         const taskEditForm = document.createElement('form'); taskEditForm.classList.add('editTask');
         const taskEditInput = document.createElement('input');
         const taskEditButtonSubmit = document.createElement('button');
         const taskEditButtonCancel = document.createElement('button');
 
-        taskEditInput.value = projects[currentIndex].checkList[index][1];
+        taskEditInput.value = projects[projectIndex].checkList[index][1];
         taskEditButtonSubmit.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="m10 17l-5-5l1.41-1.42L10 14.17l7.59-7.59L19 8m-7-6A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>';
         taskEditButtonCancel.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33 " viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m3.59 5L12 10.59L8.41 7L7 8.41L10.59 12L7 15.59L8.41 17L12 13.41L15.59 17L17 15.59L13.41 12L17 8.41z"/></svg>';    
         
@@ -311,7 +340,7 @@ function renderTaskContent(task, index){
             // const parent = e.currentTarget.parentElement.parentElement;
             e.preventDefault();
             e.stopPropagation();
-            projects[currentIndex].checkList[index][1] = taskEditInput.value;
+            projects[projectIndex].checkList[index][1] = taskEditInput.value;
 
             // generalMethods().clearElementChildren(parent);
             // parent.appendChild(renderTaskContent(task).statusDescriptionWrapper);
@@ -356,8 +385,8 @@ function renderTaskContent(task, index){
         e.stopPropagation();
         // const index = generalMethods().getIndexInParent(e.currentTarget.parentElement.parentElement);
 
-        // if(projects[currentIndex].checkList[index][0] === false){   
-        dataManagement().deleteTask(currentIndex, index);
+        // if(projects[projectIndex].checkList[index][0] === false){   
+        dataManagement().deleteTask(projectIndex, index);
         dataManagement().updateStorage();
         // taskList.removeChild(taskDelete.parentElement.parentElement);
         renderTasks();
@@ -495,8 +524,10 @@ function generalMethods(){
         };
     };
 
-    const toggleTaskwrapper= function(taskWrapper, currentIndex, index, task){
-        dataManagement().toggleTask(currentIndex, index);
+    const toggleTaskwrapper= function(taskWrapper, projectIndex, index, task){
+
+
+        dataManagement().toggleTask(projectIndex, index);
         dataManagement().updateStorage();
         // clearElementChildren(taskWrapper);
         if(task[0] === true){

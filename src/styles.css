@@ -314,7 +314,14 @@ main{
 .all-taskList{
   display: none;
   flex-direction: column;
-  background-color: red;
+
+  border-radius: 10px;
+  padding: 10px;
+
+  background-color: var(--sage);
+  box-shadow: inset var(--pearl) 3px 3px 6px 1px, inset var(--prussian) -2px -2px 6px 0px;
+
+
 }
 /* ////////////////////////////////////////////////////////////////////////////// */
 /* ////////////////////////////////////////////////////////////////////////////// */
@@ -504,7 +511,7 @@ main{
 }
 
 .taskList{
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 10px;
@@ -515,6 +522,7 @@ main{
   margin-bottom: 1rem;
 
   user-select: none;
+
 }
 .taskList > div{
   display: flex;
