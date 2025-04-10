@@ -4,7 +4,6 @@ export {cardManagement};
 
 const cardGrid = document.querySelector('.card-grid');
 const taskList = document.querySelector('.taskList');
-let currentIndex;
 //--------------------------------------------------------------------------------
 //Card management
 
@@ -13,6 +12,11 @@ function cardManagement(){
 const createCard = function(project){
     let card = document.createElement('div');
     card.classList.add('card');
+
+    card.cardProjectIndex = projects.indexOf(project);
+    
+
+    
 
     let title = document.createElement('h2');
     let description = document.createElement('p');
@@ -41,7 +45,7 @@ const createCard = function(project){
     card.appendChild(crossDelete);
 
     card.addEventListener('click', (event)=>{
-        showProjectDetails(event.currentTarget);
+        showProjectDetails(card.cardProjectIndex);
     });
     card.addEventListener('mouseenter', ()=>{
         crossDelete.style.display = 'block';
@@ -168,15 +172,15 @@ function regroupTasks(){
         if(e.target == e.currentTarget){e.currentTarget.close();};
     });
 
-const showProjectDetails = function(event){
+const showProjectDetails = function(cardProjectIndex){
 
-    currentIndex = generalMethods().getIndexInParent(event);
 
-    projectTitle.textContent = projects[currentIndex].title;
+    projectTitle.textContent = projects[cardProjectIndex].title;
 
     generalMethods().clearElementChildren(taskList);
-    renderTasks();
+    renderTasks(cardProjectIndex);
     taskList.style.display = 'flex';
+    taskList.currentIndex = cardProjectIndex;
     
     // console.log(projects[cardIndex].checkList[0][0]);
 
@@ -187,11 +191,11 @@ const showProjectDetails = function(event){
 
 
 
-function renderTasks(){
+function renderTasks(cardProjectIndex){
 
     generalMethods().clearElementChildren(taskList);
 
-    appendItemsInElement(projects[currentIndex].checkList, taskList);
+    appendItemsInElement(projects[cardProjectIndex].checkList, taskList);
 
 };
 
@@ -304,24 +308,6 @@ function renderTaskContent(task, projectIndex, index){
 
     taskRemainingTime.textContent = generalMethods().getRemainingTime(task[3]);
 
-    // const timeSubstraction = (task[3] - ((new Date()).getTime()));
-
-    // if (timeSubstraction <= 0){
-    //     taskRemainingTime.textContent = 'Expired';
-    // } else if(((timeSubstraction)/(1000*3600)) >= 24){
-    //     taskRemainingTime.textContent = `${Math.round((timeSubstraction)/(1000*3600*24))} D`;
-    // }else if(((timeSubstraction)/(1000*3600)) >= 1){
-    //     taskRemainingTime.textContent = `${Math.round((timeSubstraction)/(1000*3600))} H`;
-    // }else if(((timeSubstraction)/(1000)) < 3600){
-    //     taskRemainingTime.textContent = `${Math.round((timeSubstraction)/(1000 * 60))} Min`;
-    // };
-
-    // console.log(task[4]);
-    // console.log((new Date()).getTime());  
-    // console.log((new Date(taskData.get('taskDate'))).getTime());  
-    // console.log(new Date(taskData.get('taskDate')) - new Date());  
-    
-
     taskEdit.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-2.3 6.35c.22-.21.22-.56 0-.77L15.42 7.3a.53.53 0 0 0-.77 0l-1 1l2.05 2.05zM7 14.94V17h2.06l6.06-6.06l-2.06-2.06z"/></svg>';
     taskEdit.addEventListener('click', (e)=>{
         
@@ -356,7 +342,7 @@ function renderTaskContent(task, projectIndex, index){
             dataManagement().updateStorage();
 
             if (cardGrid.style.display !== 'none'){
-                renderTasks();
+                renderTasks(projectIndex);
             }else{
                 renderCumulatedTasks();
             };
@@ -375,7 +361,7 @@ function renderTaskContent(task, projectIndex, index){
             // parent.appendChild(renderTaskContent(task).editDeleteWrapper);
 
             if (cardGrid.style.display !== 'none'){
-                renderTasks();
+                renderTasks(projectIndex);
             }else{
                 renderCumulatedTasks();
             };
@@ -407,7 +393,7 @@ function renderTaskContent(task, projectIndex, index){
         // taskList.removeChild(taskDelete.parentElement.parentElement);
         
         if (cardGrid.style.display !== 'none'){
-            renderTasks();
+            renderTasks(projectIndex);
         }else{
             renderCumulatedTasks();
         };
@@ -427,7 +413,8 @@ function renderTaskContent(task, projectIndex, index){
 
 const addTaskButton = document.querySelector('.projectContent > button:last-child');
 addTaskButton.addEventListener('click', ()=>{
-    renderTasks();
+    
+    renderTasks(taskList.currentIndex);
 
     if((taskList.children.length == 0) || (taskList.lastChild.nodeName === 'DIV')){
 
@@ -484,18 +471,17 @@ addTaskButton.addEventListener('click', ()=>{
     newTaskButtonsWrapper.append(newTaskSubmitButton, newTaskCancelButton);
 
     newTaskForm.addEventListener('submit', (e)=>{
-        // renderTasks(taskList);
         e.preventDefault();
 
         const taskData = new FormData(newTaskForm);
-        projects[currentIndex].checkList.push([false, taskData.get('todo'), Number(taskData.get('priority')), (new Date(taskData.get('taskDate'))).getTime()]);
+        projects[taskList.currentIndex].checkList.push([false, taskData.get('todo'), Number(taskData.get('priority')), (new Date(taskData.get('taskDate'))).getTime()]);
 
-        projects[currentIndex].checkList = projects[currentIndex].checkList.sort((a, b) => a[3]-b[3]);
+        projects[taskList.currentIndex].checkList = projects[taskList.currentIndex].checkList.sort((a, b) => a[3]-b[3]);
         
 
 
         dataManagement().updateStorage();
-        renderTasks();
+        renderTasks(taskList.currentIndex);
 
     });    
 
