@@ -106,6 +106,10 @@ const cancelProjectButton = document.querySelector('#new-project-cancel');
         projectForm.reset();
 
         cardManagement().renderCards();
+        
+        allTasksAllProjectsButton.innerHTML = 'All <br>Tasks';
+        allTasksList.style.display = 'none';
+        cardGrid.style.display = 'grid';
 
     });
 
